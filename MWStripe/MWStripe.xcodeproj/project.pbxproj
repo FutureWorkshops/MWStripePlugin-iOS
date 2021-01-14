@@ -11,6 +11,7 @@
 		B1FA19F525B0895800384DCE /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = B1FA19F425B0895800384DCE /* app.json */; };
 		B1FA1A2525B08A0300384DCE /* MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */; };
 		B1FA1A2625B08A0300384DCE /* MWStripePlugin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B1FA1A3D25B08A8700384DCE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A3C25B08A8700384DCE /* SceneDelegate.swift */; };
 		B75028B51C5A3F94000EB3CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75028B41C5A3F94000EB3CF /* AppDelegate.swift */; };
 		B75028BC1C5A3F94000EB3CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B75028BB1C5A3F94000EB3CF /* Assets.xcassets */; };
 		B75028BF1C5A3F94000EB3CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B75028BD1C5A3F94000EB3CF /* LaunchScreen.storyboard */; };
@@ -48,6 +49,7 @@
 		84CF2555A68A9EDC17832D47 /* Pods_MWStripeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FA19F425B0895800384DCE /* app.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
 		B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MWStripePlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1FA1A3C25B08A8700384DCE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B75028B11C5A3F94000EB3CF /* MWStripe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MWStripe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75028B41C5A3F94000EB3CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B75028BB1C5A3F94000EB3CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				B75028D51C5A404A000EB3CF /* Resources */,
 				B75028D41C5A4045000EB3CF /* Supporting Files */,
 				B75028B41C5A3F94000EB3CF /* AppDelegate.swift */,
+				B1FA1A3C25B08A8700384DCE /* SceneDelegate.swift */,
 			);
 			path = MWStripe;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B75028B51C5A3F94000EB3CF /* AppDelegate.swift in Sources */,
+				B1FA1A3D25B08A8700384DCE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
