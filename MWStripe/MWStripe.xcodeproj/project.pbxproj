@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		27E83C5E4BB109017CE503F5 /* Pods_MWStripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 592DA336FF15F770747B1147 /* Pods_MWStripe.framework */; };
+		B1FA19F525B0895800384DCE /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = B1FA19F425B0895800384DCE /* app.json */; };
 		B75028B51C5A3F94000EB3CF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75028B41C5A3F94000EB3CF /* AppDelegate.swift */; };
 		B75028B71C5A3F94000EB3CF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75028B61C5A3F94000EB3CF /* ViewController.swift */; };
 		B75028BC1C5A3F94000EB3CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B75028BB1C5A3F94000EB3CF /* Assets.xcassets */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		592DA336FF15F770747B1147 /* Pods_MWStripe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C0E9BB20BC315100255055 /* MWStripe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MWStripe.entitlements; sourceTree = "<group>"; };
+		B1FA19F425B0895800384DCE /* app.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
 		B75028B11C5A3F94000EB3CF /* MWStripe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MWStripe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75028B41C5A3F94000EB3CF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B75028B61C5A3F94000EB3CF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,6 +71,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B1FA19F325B0894800384DCE /* App Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA19F425B0895800384DCE /* app.json */,
+			);
+			path = "App Configuration";
+			sourceTree = "<group>";
+		};
 		B75028A81C5A3F94000EB3CF = {
 			isa = PBXGroup;
 			children = (
@@ -92,6 +102,7 @@
 		B75028B31C5A3F94000EB3CF /* MWStripe */ = {
 			isa = PBXGroup;
 			children = (
+				B1FA19F325B0894800384DCE /* App Configuration */,
 				B75028D51C5A404A000EB3CF /* Resources */,
 				B75028D41C5A4045000EB3CF /* Supporting Files */,
 				B75028B41C5A3F94000EB3CF /* AppDelegate.swift */,
@@ -239,6 +250,7 @@
 			files = (
 				B75028BF1C5A3F94000EB3CF /* LaunchScreen.storyboard in Resources */,
 				B75028BC1C5A3F94000EB3CF /* Assets.xcassets in Resources */,
+				B1FA19F525B0895800384DCE /* app.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
