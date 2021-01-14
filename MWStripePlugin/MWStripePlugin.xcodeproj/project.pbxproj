@@ -12,6 +12,7 @@
 		B1FA1A0E25B089DA00384DCE /* MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */; };
 		B1FA1A1325B089DA00384DCE /* MWStripePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A1225B089DA00384DCE /* MWStripePluginTests.swift */; };
 		B1FA1A1525B089DA00384DCE /* MWStripePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B1FA1A4025B0918A00384DCE /* MWStripePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A3F25B0918A00384DCE /* MWStripePlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +37,7 @@
 		B1FA1A0D25B089DA00384DCE /* MWStripePluginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MWStripePluginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FA1A1225B089DA00384DCE /* MWStripePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripePluginTests.swift; sourceTree = "<group>"; };
 		B1FA1A1425B089DA00384DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1FA1A3F25B0918A00384DCE /* MWStripePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripePlugin.swift; sourceTree = "<group>"; };
 		B709C4171B24C94BEDD09502 /* Pods-MWStripePluginTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripePluginTests.release.xcconfig"; path = "Target Support Files/Pods-MWStripePluginTests/Pods-MWStripePluginTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,6 +106,7 @@
 		B1FA1A0625B089DA00384DCE /* MWStripePlugin */ = {
 			isa = PBXGroup;
 			children = (
+				B1FA1A3F25B0918A00384DCE /* MWStripePlugin.swift */,
 				B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */,
 				B1FA1A0825B089DA00384DCE /* Info.plist */,
 			);
@@ -182,6 +185,7 @@
 				TargetAttributes = {
 					B1FA1A0325B089DA00384DCE = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 					B1FA1A0C25B089DA00384DCE = {
 						CreatedOnToolsVersion = 12.3;
@@ -276,6 +280,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1FA1A4025B0918A00384DCE /* MWStripePlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +429,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C72E25B63F1758ABB572D17 /* Pods-MWStripe-MWStripePlugin.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = BQHMJ2C6RL;
@@ -441,6 +447,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -450,6 +457,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8196621F60109954924D45D1 /* Pods-MWStripe-MWStripePlugin.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = BQHMJ2C6RL;
@@ -476,6 +484,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1C142F139FBB4BA5C7597301 /* Pods-MWStripePluginTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQHMJ2C6RL;
 				INFOPLIST_FILE = MWStripePluginTests/Info.plist;
@@ -495,6 +504,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B709C4171B24C94BEDD09502 /* Pods-MWStripePluginTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BQHMJ2C6RL;
 				INFOPLIST_FILE = MWStripePluginTests/Info.plist;
