@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27E83C5E4BB109017CE503F5 /* Pods_MWStripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 592DA336FF15F770747B1147 /* Pods_MWStripe.framework */; };
+		81AB04A1CC908BF188BD6CC8 /* Pods_MWStripe_MWStripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3500826EBAD1762400DA62 /* Pods_MWStripe_MWStripe.framework */; };
 		B1FA19F525B0895800384DCE /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = B1FA19F425B0895800384DCE /* app.json */; };
 		B1FA1A2525B08A0300384DCE /* MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */; };
 		B1FA1A2625B08A0300384DCE /* MWStripePlugin.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -15,6 +15,7 @@
 		B75028BC1C5A3F94000EB3CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B75028BB1C5A3F94000EB3CF /* Assets.xcassets */; };
 		B75028BF1C5A3F94000EB3CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B75028BD1C5A3F94000EB3CF /* LaunchScreen.storyboard */; };
 		B75028CA1C5A3F94000EB3CF /* MWStripeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B75028C91C5A3F94000EB3CF /* MWStripeTests.swift */; };
+		CF81305FCD6B377FF95FA014 /* Pods_MWStripeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84CF2555A68A9EDC17832D47 /* Pods_MWStripeTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +43,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		592DA336FF15F770747B1147 /* Pods_MWStripe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		494EEF5DC96ECD7AF7B53E9F /* Pods-MWStripeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripeTests.release.xcconfig"; path = "Target Support Files/Pods-MWStripeTests/Pods-MWStripeTests.release.xcconfig"; sourceTree = "<group>"; };
 		78C0E9BB20BC315100255055 /* MWStripe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MWStripe.entitlements; sourceTree = "<group>"; };
+		84CF2555A68A9EDC17832D47 /* Pods_MWStripeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FA19F425B0895800384DCE /* app.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
 		B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MWStripePlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B75028B11C5A3F94000EB3CF /* MWStripe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MWStripe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,8 +57,12 @@
 		B75028C91C5A3F94000EB3CF /* MWStripeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripeTests.swift; sourceTree = "<group>"; };
 		B75028CB1C5A3F94000EB3CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B75028D71C5A4093000EB3CF /* fw-shared.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "fw-shared.xcconfig"; sourceTree = "<group>"; };
+		C2C1CE193C1323DA45DFA9EE /* Pods-MWStripe-MWStripe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe-MWStripe.debug.xcconfig"; path = "Target Support Files/Pods-MWStripe-MWStripe/Pods-MWStripe-MWStripe.debug.xcconfig"; sourceTree = "<group>"; };
+		D1ECA8038B780F236F9878A9 /* Pods-MWStripe-MWStripe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe-MWStripe.release.xcconfig"; path = "Target Support Files/Pods-MWStripe-MWStripe/Pods-MWStripe-MWStripe.release.xcconfig"; sourceTree = "<group>"; };
 		D41E9559D540E7EA3C0150CF /* Pods-MWStripe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe.debug.xcconfig"; path = "Target Support Files/Pods-MWStripe/Pods-MWStripe.debug.xcconfig"; sourceTree = "<group>"; };
+		D5FF15895F3C79A7DFA6F11D /* Pods-MWStripeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripeTests.debug.xcconfig"; path = "Target Support Files/Pods-MWStripeTests/Pods-MWStripeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E367E71A02FC26B2947748CA /* Pods-MWStripe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe.release.xcconfig"; path = "Target Support Files/Pods-MWStripe/Pods-MWStripe.release.xcconfig"; sourceTree = "<group>"; };
+		FA3500826EBAD1762400DA62 /* Pods_MWStripe_MWStripe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripe_MWStripe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +71,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1FA1A2525B08A0300384DCE /* MWStripePlugin.framework in Frameworks */,
-				27E83C5E4BB109017CE503F5 /* Pods_MWStripe.framework in Frameworks */,
+				81AB04A1CC908BF188BD6CC8 /* Pods_MWStripe_MWStripe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF81305FCD6B377FF95FA014 /* Pods_MWStripeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				B1FA1A2425B08A0300384DCE /* MWStripePlugin.framework */,
-				592DA336FF15F770747B1147 /* Pods_MWStripe.framework */,
+				FA3500826EBAD1762400DA62 /* Pods_MWStripe_MWStripe.framework */,
+				84CF2555A68A9EDC17832D47 /* Pods_MWStripeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,6 +176,10 @@
 			children = (
 				D41E9559D540E7EA3C0150CF /* Pods-MWStripe.debug.xcconfig */,
 				E367E71A02FC26B2947748CA /* Pods-MWStripe.release.xcconfig */,
+				C2C1CE193C1323DA45DFA9EE /* Pods-MWStripe-MWStripe.debug.xcconfig */,
+				D1ECA8038B780F236F9878A9 /* Pods-MWStripe-MWStripe.release.xcconfig */,
+				D5FF15895F3C79A7DFA6F11D /* Pods-MWStripeTests.debug.xcconfig */,
+				494EEF5DC96ECD7AF7B53E9F /* Pods-MWStripeTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = ../Pods;
@@ -185,6 +197,7 @@
 				B75028AE1C5A3F94000EB3CF /* Frameworks */,
 				B75028AF1C5A3F94000EB3CF /* Resources */,
 				B1FA1A2725B08A0400384DCE /* Embed Frameworks */,
+				4D4F8A0BF772B2D56FB7524F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -199,6 +212,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B75028D11C5A3F94000EB3CF /* Build configuration list for PBXNativeTarget "MWStripeTests" */;
 			buildPhases = (
+				6A1ECFA2CDF35B720DE215E7 /* [CP] Check Pods Manifest.lock */,
 				B75028C11C5A3F94000EB3CF /* Sources */,
 				B75028C21C5A3F94000EB3CF /* Frameworks */,
 				B75028C31C5A3F94000EB3CF /* Resources */,
@@ -296,7 +310,47 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MWStripe-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MWStripe-MWStripe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4D4F8A0BF772B2D56FB7524F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MWStripe-MWStripe/Pods-MWStripe-MWStripe-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MobileWorkflowCore/MobileWorkflowCore.framework/MobileWorkflowCore",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileWorkflowCore.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MWStripe-MWStripe/Pods-MWStripe-MWStripe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6A1ECFA2CDF35B720DE215E7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MWStripeTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -451,7 +505,7 @@
 		};
 		B75028CF1C5A3F94000EB3CF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D41E9559D540E7EA3C0150CF /* Pods-MWStripe.debug.xcconfig */;
+			baseConfigurationReference = C2C1CE193C1323DA45DFA9EE /* Pods-MWStripe-MWStripe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "MWStripe/Supporting Files/MWStripe.entitlements";
@@ -469,7 +523,7 @@
 		};
 		B75028D01C5A3F94000EB3CF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E367E71A02FC26B2947748CA /* Pods-MWStripe.release.xcconfig */;
+			baseConfigurationReference = D1ECA8038B780F236F9878A9 /* Pods-MWStripe-MWStripe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "MWStripe/Supporting Files/MWStripe.entitlements";
@@ -487,6 +541,7 @@
 		};
 		B75028D21C5A3F94000EB3CF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D5FF15895F3C79A7DFA6F11D /* Pods-MWStripeTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
@@ -503,6 +558,7 @@
 		};
 		B75028D31C5A3F94000EB3CF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 494EEF5DC96ECD7AF7B53E9F /* Pods-MWStripeTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Manual;
