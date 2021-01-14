@@ -12,7 +12,7 @@ project 'MWStripePlugin/MWStripePlugin.xcodeproj'
 
 abstract_target 'MWStripe' do
   pod 'MobileWorkflow'
-  #here you can add any extra dependencies that you need
+  pod 'Stripe'
 
   target 'MWStripe' do
     project 'MWStripe/MWStripe.xcodeproj'
