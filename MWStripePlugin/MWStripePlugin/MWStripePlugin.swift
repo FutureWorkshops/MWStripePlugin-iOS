@@ -15,8 +15,7 @@ public struct MWStripePlugin: MobileWorkflowPlugin {
 
 public enum MWStripeStepType: String, MobileWorkflowStepType, CaseIterable {
     
-    //fixme: temporary
-    case buy = "com.stripe.buy"
+    case basicCheckout = "com.stripe.StripeBasicCheckout"
     
     public var typeName: String {
         return self.rawValue
@@ -24,7 +23,7 @@ public enum MWStripeStepType: String, MobileWorkflowStepType, CaseIterable {
     
     public var stepClass: MobileWorkflowStep.Type {
         switch self {
-        case .buy: return MWStripeStep.self
+        case .basicCheckout: return MWStripeStep.self
         }
     }
 }

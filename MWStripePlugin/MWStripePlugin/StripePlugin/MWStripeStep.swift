@@ -10,7 +10,12 @@ import MobileWorkflowCore
 
 public class MWStripeStep: ORKStep {
     
-    override init(identifier: String) {
+    let publishableKey: String
+    let ephemeralKeyURL: URL
+    
+    init(identifier: String, publishableKey: String, ephemeralKeyURL: URL) {
+        self.publishableKey = publishableKey
+        self.ephemeralKeyURL = ephemeralKeyURL
         super.init(identifier: identifier)
     }
     
@@ -25,6 +30,12 @@ public class MWStripeStep: ORKStep {
 
 extension MWStripeStep: MobileWorkflowStep {
     public static func build(step stepInfo: StepInfo, services: MobileWorkflowServices) throws -> ORKStep {
-        return MWStripeStep(identifier: stepInfo.data.identifier)
+        if let publishableKey = stepInfo.data.content["publishableKey"] as? String,
+              let ephemeralKeyURLString = stepInfo.data.content["ephemeralKeyURL"] as? String,
+              let ephemeralKeyURL = URL(string: ephemeralKeyURLString) {
+            return MWStripeStep(identifier: stepInfo.data.identifier, publishableKey: publishableKey, ephemeralKeyURL: ephemeralKeyURL)
+        } else {
+            throw ParseError.invalidStepData(cause: "Missing publishableKey or ephemeralKeyURL")
+        }
     }
 }
