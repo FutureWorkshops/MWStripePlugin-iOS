@@ -1,1 +1,39 @@
-
+{
+    "gatherAnalytics": false,
+    "id": 501,
+    "locales": [],
+    "name": "Stripe",
+    "navigationStyle": "list",
+    "servers": [],
+    "systemTintColor": "blue",
+    "workflows": [
+        {
+            "id": 903,
+            "identifier": "Checkout",
+            "materialIconName": "",
+            "name": "Checkout",
+            "navigationRules": [
+                {
+                    "from": "checkout",
+                    "rules": [
+                        {
+                            "to": "ORKNullStepIdentifier"
+                        }
+                    ]
+                }
+            ],
+            "sfSymbolName": "",
+            "steps": [
+                {
+                    "ephemeralKeyURL": "https://mw-stripe-dev1.herokuapp.com/ephemeral_keys",
+                    "identifier": "checkout",
+                    "optional": false,
+                    "publishableKey": "pk_test_d4ejnh3xJeBrQai1iX658cWA",
+                    "title": "Checkout",
+                    "type": "com.stripe.StripeBasicCheckout",
+                    "uuid": "17bd967d-05a8-4165-a8a1-3c6f0694aea8"
+                }
+            ]
+        }
+    ]
+}
