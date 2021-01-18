@@ -22,8 +22,7 @@ public class MWStripeViewController: ORKStepViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.buyButton.setTitle("Trigger Buy Flow", for: .normal)
-        self.buyButton.addTarget(self, action: #selector(buyButtonTapped(_:)), for: .primaryActionTriggered)
+        self.configureBuyButtonToSelectPaymentOption()
         self.buyButton.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.buyButton)
         self.buyButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
@@ -42,9 +41,27 @@ public class MWStripeViewController: ORKStepViewController {
         self.paymentContext?.paymentAmount = 5000 // This is in cents, i.e. $50
     }
     
+    private func configureBuyButtonToSelectPaymentOption() {
+        self.buyButton.setTitle("Buy Item", for: .normal)
+        self.buyButton.removeTarget(nil, action: nil, for: .allEvents)
+        self.buyButton.addTarget(self, action: #selector(buyButtonTappedToTriggerSelectionOfPaymentOption(_:)), for: .primaryActionTriggered)
+    }
+    
+    private func configureBuyButtonToBuy(usingPaymentOption paymentOption: STPPaymentOption) {
+        self.buyButton.setTitle("Buy Item using \(paymentOption.label)", for: .normal)
+        self.buyButton.removeTarget(nil, action: nil, for: .allEvents)
+        self.buyButton.addTarget(self, action: #selector(buyButtonTappedToConfirmPurchase(_:)), for: .primaryActionTriggered)
+    }
+    
     //MARK: IBActions
-    @IBAction private func buyButtonTapped(_ sender: UIButton) {
+    @IBAction private func buyButtonTappedToTriggerSelectionOfPaymentOption(_ sender: UIButton) {
+        // Step 5 - Handle the user's payment method: https://stripe.com/docs/mobile/ios/basic#handle-payment-method
         self.paymentContext?.presentPaymentOptionsViewController()
+    }
+    
+    @IBAction private func buyButtonTappedToConfirmPurchase(_ sender: UIButton) {
+        // Step 6 - Submit the payment: https://stripe.com/docs/mobile/ios/basic#submit-payment
+        self.paymentContext?.requestPayment()
     }
     
 }
@@ -88,7 +105,12 @@ extension MWStripeViewController: STPCustomerEphemeralKeyProvider {
 
 extension MWStripeViewController: STPPaymentContextDelegate {
     public func paymentContextDidChange(_ paymentContext: STPPaymentContext) {
-        print(#function)
+        print("paymentContextDidChange, isLoading: \(paymentContext.loading)")
+        if let selectedPaymentOption = paymentContext.selectedPaymentOption {
+            self.configureBuyButtonToBuy(usingPaymentOption: selectedPaymentOption)
+        } else {
+            self.configureBuyButtonToSelectPaymentOption()
+        }
     }
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didFailToLoadWithError error: Error) {
@@ -96,7 +118,8 @@ extension MWStripeViewController: STPPaymentContextDelegate {
     }
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
-        print(#function)
+        // Call the createPaymentIntent
+        // Confirm the purchase when the result is sucess
     }
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didFinishWith status: STPPaymentStatus, error: Error?) {
