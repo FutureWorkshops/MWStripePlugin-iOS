@@ -117,16 +117,18 @@ extension MWStripeViewController: STPPaymentContextDelegate {
         // Call the createPaymentIntent
         // Confirm the purchase when the result is sucess
         
-        //FIXME: This should come from the step
-        let baseURL = URL(string: "https://mw-stripe-dev1.herokuapp.com/create_payment_intent")!
+        //FIXME: This should come from the step & remove the force unwrap
+        var components = URLComponents(url: URL(string: "https://mw-stripe-dev1.herokuapp.com/create_payment_intent")!, resolvingAgainstBaseURL: false)!
+        components.queryItems = [
+            URLQueryItem(name: "email", value: "matt@futureworkshops.com"),
+            URLQueryItem(name: "customer_id", value: "cus_Il1PzN4kcyTooT"),
+            URLQueryItem(name: "product_id", value: "1")
+        ]
         
-        //FIXME: Get the real ID of the products that we're purchasing
-        let productIDs = [1]
-        
-        var request = URLRequest(url: baseURL)
+        // FIXME: Remove force unwrap
+        var request = URLRequest(url: components.url!)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
-        request.httpBody = try? JSONSerialization.data(withJSONObject: productIDs)
         
         let task = URLSession.shared.dataTask(with: request) { dataOrNil, urlResponseOrNil, errorOrNil in
             if let response = urlResponseOrNil as? HTTPURLResponse, response.statusCode == 200, let data = dataOrNil, let json = ((try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]) as [String: Any]??), let secret = json?["secret"] as? String {
