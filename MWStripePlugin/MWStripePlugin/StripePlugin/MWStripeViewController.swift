@@ -11,6 +11,9 @@ import MobileWorkflowCore
 
 public class MWStripeViewController: ORKStepViewController {
     
+    //MARK: IBOutlets
+    private let buyButton = UIButton(type: .system)
+    
     //MARK: private properties
     private var stripeStep: MWStripeStep { self.step as! MWStripeStep }
     private var customerContext: STPCustomerContext?
@@ -18,6 +21,13 @@ public class MWStripeViewController: ORKStepViewController {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.buyButton.setTitle("Trigger Buy Flow", for: .normal)
+        self.buyButton.addTarget(self, action: #selector(buyButtonTapped(_:)), for: .primaryActionTriggered)
+        self.buyButton.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.buyButton)
+        self.buyButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.buyButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         
         // Step 1 - Provide a publishable key to set up the SDK: https://stripe.com/docs/mobile/ios/basic#setup-ios
         StripeAPI.defaultPublishableKey = self.stripeStep.publishableKey
@@ -30,6 +40,11 @@ public class MWStripeViewController: ORKStepViewController {
         self.paymentContext?.delegate = self
         self.paymentContext?.hostViewController = self
         self.paymentContext?.paymentAmount = 5000 // This is in cents, i.e. $50
+    }
+    
+    //MARK: IBActions
+    @IBAction private func buyButtonTapped(_ sender: UIButton) {
+        self.paymentContext?.presentPaymentOptionsViewController()
     }
     
 }
@@ -45,6 +60,12 @@ extension MWStripeViewController: STPCustomerEphemeralKeyProvider {
         }
         
         urlComponents.queryItems = [URLQueryItem(name: "api_version", value: apiVersion)]
+        
+        //FIXME: Temporarly include a hardcoded email & customer ID
+        var extraQueryItems = urlComponents.queryItems
+        extraQueryItems?.append(URLQueryItem(name: "email", value: "matt@futureworkshops.com"))
+        extraQueryItems?.append(URLQueryItem(name: "customer_id", value: "cus_Il1PzN4kcyTooT"))
+        urlComponents.queryItems = extraQueryItems
         
         guard let finalURL = urlComponents.url else {
             completion(nil, MWStripeError.failedToConstructEphemeralURL)
