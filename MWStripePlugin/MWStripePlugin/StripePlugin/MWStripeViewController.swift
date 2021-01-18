@@ -13,26 +13,28 @@ public class MWStripeViewController: ORKStepViewController {
     
     //MARK: private properties
     private var stripeStep: MWStripeStep { self.step as! MWStripeStep }
+    private var customerContext: STPCustomerContext?
+    private var paymentContext: STPPaymentContext?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Step 1 - Provide a publishable key to set up the SDK
+        // Step 1 - Provide a publishable key to set up the SDK: https://stripe.com/docs/mobile/ios/basic#setup-ios
         StripeAPI.defaultPublishableKey = self.stripeStep.publishableKey
+        
+        // Step 3 - Set up an STPCustomerContext: https://stripe.com/docs/mobile/ios/basic#set-up-customer-context
+        self.customerContext = STPCustomerContext(keyProvider: self)
+        
+        // Step 4 - Set up an STPPaymentContext: https://stripe.com/docs/mobile/ios/basic#initialize-payment-context
+        self.paymentContext = STPPaymentContext(customerContext: self.customerContext!)
+        self.paymentContext?.delegate = self
+        self.paymentContext?.hostViewController = self
+        self.paymentContext?.paymentAmount = 5000 // This is in cents, i.e. $50
     }
     
 }
 
 // MARK: Stripe API
-enum MWStripeError: LocalizedError {
-    case failedToConstructEphemeralURL
-    
-    var errorDescription: String? {
-        switch self {
-        case .failedToConstructEphemeralURL: return "Failed to construct the URL to retrieve the ephemeral key."
-        }
-    }
-}
 
 // Step 2 - Set up an ephemeral key: https://stripe.com/docs/mobile/ios/basic#ephemeral-key
 extension MWStripeViewController: STPCustomerEphemeralKeyProvider {
@@ -60,5 +62,34 @@ extension MWStripeViewController: STPCustomerEphemeralKeyProvider {
             }
         }
         task.resume()
+    }
+}
+
+extension MWStripeViewController: STPPaymentContextDelegate {
+    public func paymentContextDidChange(_ paymentContext: STPPaymentContext) {
+        print(#function)
+    }
+    
+    public func paymentContext(_ paymentContext: STPPaymentContext, didFailToLoadWithError error: Error) {
+        print(#function)
+    }
+    
+    public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
+        print(#function)
+    }
+    
+    public func paymentContext(_ paymentContext: STPPaymentContext, didFinishWith status: STPPaymentStatus, error: Error?) {
+        print(#function)
+    }
+}
+
+// MARK: Errors
+enum MWStripeError: LocalizedError {
+    case failedToConstructEphemeralURL
+    
+    var errorDescription: String? {
+        switch self {
+        case .failedToConstructEphemeralURL: return "Failed to construct the URL to retrieve the ephemeral key."
+        }
     }
 }
