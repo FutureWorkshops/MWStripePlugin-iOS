@@ -113,17 +113,67 @@ extension MWStripeViewController: STPPaymentContextDelegate {
         }
     }
     
-    public func paymentContext(_ paymentContext: STPPaymentContext, didFailToLoadWithError error: Error) {
-        print(#function)
-    }
-    
     public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
         // Call the createPaymentIntent
         // Confirm the purchase when the result is sucess
+        
+        //FIXME: This should come from the step
+        let baseURL = URL(string: "https://mw-stripe-dev1.herokuapp.com/create_payment_intent")!
+        
+        //FIXME: Get the real ID of the products that we're purchasing
+        let productIDs = [1]
+        
+        var request = URLRequest(url: baseURL)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONSerialization.data(withJSONObject: productIDs)
+        
+        let task = URLSession.shared.dataTask(with: request) { dataOrNil, urlResponseOrNil, errorOrNil in
+            if let response = urlResponseOrNil as? HTTPURLResponse, response.statusCode == 200, let data = dataOrNil, let json = ((try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]) as [String: Any]??), let secret = json?["secret"] as? String {
+                
+                let paymentIntentParams = STPPaymentIntentParams(clientSecret: secret)
+                paymentIntentParams.paymentMethodId = paymentResult.paymentMethod?.stripeId
+                
+                STPPaymentHandler.shared().confirmPayment(paymentIntentParams, with: paymentContext) { paymentStatus, paymentIntent, paymentError in
+                    switch paymentStatus {
+                    case .succeeded:
+                        completion(.success, nil)
+                    case .failed:
+                        completion(.error, paymentError)
+                    case .canceled:
+                        completion(.userCancellation, nil)
+                    @unknown default:
+                        assertionFailure("Unhandled case")
+                        completion(.error, nil)
+                    }
+                }
+                
+            } else {
+                completion(.error, errorOrNil)
+            }
+        }
+        task.resume()
+        
     }
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didFinishWith status: STPPaymentStatus, error: Error?) {
-        print(#function)
+        switch status {
+        case .success:
+            let alertController = UIAlertController(title: "Success", message: "Successfully purchased the product.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default))
+            self.present(alertController, animated: true)
+        case .error:
+            let alertController = UIAlertController(title: "Error", message: error?.localizedDescription ?? "UNKNOWN ERROR", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Dismiss", style: .default))
+            self.present(alertController, animated: true)
+        case .userCancellation:
+            print("User cancelled the payment, do nothing")
+        }
+    }
+    
+    public func paymentContext(_ paymentContext: STPPaymentContext, didFailToLoadWithError error: Error) {
+        assertionFailure("Failed to load the Payment Context")
+        self.dismiss(animated: true)
     }
 }
 
