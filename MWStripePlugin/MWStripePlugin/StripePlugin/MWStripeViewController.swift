@@ -24,17 +24,19 @@ public class MWStripeViewController: ORKStepViewController {
         self.stripeAPIClient.delegate = self
         self.stripeAPIClient.paymentContextHostViewController = self
         
-        self.configureBuyButtonToSelectPaymentOption()
+        self.buyButton.setTitle("Loading...", for: .normal)
         self.buyButton.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.buyButton)
         self.buyButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         self.buyButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
     }
     
-    private func configureBuyButtonToSelectPaymentOption() {
-        self.buyButton.setTitle("Buy Item", for: .normal)
-        self.buyButton.removeTarget(nil, action: nil, for: .allEvents)
-        self.buyButton.addTarget(stripeAPIClient, action: #selector(stripeAPIClient.presentPaymentOptionsViewController), for: .primaryActionTriggered)
+    public override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // Automatically trigger the payment options
+        // warning: This can't be called on viewDidLoad or viewWillAppear because the UIViewController doesn't have
+        // a `.window` yet and the Stripe SDK asserts on that
+        self.stripeAPIClient.presentPaymentOptionsViewController()
     }
     
     private func configureBuyButtonToBuy(usingSelectedPaymentOption paymentOptionLabel: String) {
@@ -60,8 +62,6 @@ extension MWStripeViewController: MWStripeAPIClientDelegate {
     public func paymentContextDidChange(isLoading: Bool, selectedPaymentOptionLabel: String?) {
         if let selectedPaymentOption = selectedPaymentOptionLabel {
             self.configureBuyButtonToBuy(usingSelectedPaymentOption: selectedPaymentOption)
-        } else {
-            self.configureBuyButtonToSelectPaymentOption()
         }
     }
     
