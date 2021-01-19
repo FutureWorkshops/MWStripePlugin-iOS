@@ -78,8 +78,8 @@ extension MWStripeViewController: MWStripeAPIClientDelegate {
             case .success: success = true
             default: success = false
             }
-            let result = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: success)
-            self.addResult(result)
+            let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: success)
+            self.addResult(purchaseResult)
             self.goForward()
         }
     }
