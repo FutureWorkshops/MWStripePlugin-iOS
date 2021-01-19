@@ -56,7 +56,11 @@ extension MWStripeViewController: MWStripeAPIClientDelegate {
     public func paymentContextDidFailToLoad(withError error: Error) {
         let alertController = UIAlertController(title: "Failed to load", message: error.localizedDescription, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default) { [weak self] _ in
-            self?.goBackward()
+            if self?.navigationController?.viewControllers.first === self {
+                self?.dismiss(animated: true)
+            } else {
+                self?.goBackward()
+            }
         })
         self.present(alertController, animated: true)
     }
