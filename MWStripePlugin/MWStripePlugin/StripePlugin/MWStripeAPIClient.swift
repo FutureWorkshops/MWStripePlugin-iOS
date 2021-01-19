@@ -52,6 +52,7 @@ public final class MWStripeAPIClient: NSObject {
         self.paymentContext?.paymentAmount = 5000 // This is in cents, i.e. $50
     }
     
+    // MARK: Methods to interact with the UI
     // Step 5 - Handle the user's payment method: https://stripe.com/docs/mobile/ios/basic#handle-payment-method
     public func presentPaymentOptionsViewController() {
         self.paymentContext?.presentPaymentOptionsViewController()
@@ -63,8 +64,10 @@ public final class MWStripeAPIClient: NSObject {
     }
 }
 
+// MARK: STPCustomerEphemeralKeyProvider
 // Step 2 - Set up an ephemeral key: https://stripe.com/docs/mobile/ios/basic#ephemeral-key
 extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
+    // This method is called automatically after you create an `STPCustomerContext`
     public func createCustomerKey(withAPIVersion apiVersion: String, completion: @escaping STPJSONResponseCompletionBlock) {
         var urlComponents = URLComponents(url: self.step.ephemeralKeyURL, resolvingAgainstBaseURL: false)!
         
@@ -90,6 +93,7 @@ extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
     }
 }
 
+// MARK: STPPaymentContextDelegate
 extension MWStripeAPIClient: STPPaymentContextDelegate {
     public func paymentContextDidChange(_ paymentContext: STPPaymentContext) {
         self.delegate?.paymentContextDidChange(isLoading: paymentContext.loading, selectedPaymentOptionLabel: paymentContext.selectedPaymentOption?.label)
@@ -142,7 +146,7 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
         case .success:
             self.delegate?.paymentContextDidFinishWith(result: .success)
         case .error:
-            self.delegate?.paymentContextDidFinishWith(result: .error(error: error ?? NSError(domain: "io.mobileworkflow.stripe", code: 0, userInfo: [NSLocalizedDescriptionKey:"Payment context failed but the error was not present."])))
+            self.delegate?.paymentContextDidFinishWith(result: .error(error: error ?? NSError(domain: "io.mobileworkflow.stripe", code: 0, userInfo: [NSLocalizedDescriptionKey:"Payment context failed but there was no error returned by Stripe."])))
         case .userCancellation:
             self.delegate?.paymentContextDidFinishWith(result: .userCancelled)
         }
