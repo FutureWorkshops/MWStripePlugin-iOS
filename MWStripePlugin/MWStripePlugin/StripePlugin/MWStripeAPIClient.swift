@@ -54,12 +54,12 @@ public final class MWStripeAPIClient: NSObject {
     
     // MARK: Methods to interact with the UI
     // Step 5 - Handle the user's payment method: https://stripe.com/docs/mobile/ios/basic#handle-payment-method
-    public func presentPaymentOptionsViewController() {
+    @objc public func presentPaymentOptionsViewController() {
         self.paymentContext?.presentPaymentOptionsViewController()
     }
     
     // Step 6 - Submit the payment: https://stripe.com/docs/mobile/ios/basic#submit-payment
-    public func requestPayment() {
+    @objc public func requestPayment() {
         self.paymentContext?.requestPayment()
     }
 }

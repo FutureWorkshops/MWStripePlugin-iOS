@@ -34,21 +34,13 @@ public class MWStripeViewController: ORKStepViewController {
     private func configureBuyButtonToSelectPaymentOption() {
         self.buyButton.setTitle("Buy Item", for: .normal)
         self.buyButton.removeTarget(nil, action: nil, for: .allEvents)
-        self.buyButton.addTarget(self, action: #selector(presentPaymentOptions), for: .primaryActionTriggered)
+        self.buyButton.addTarget(stripeAPIClient, action: #selector(stripeAPIClient.presentPaymentOptionsViewController), for: .primaryActionTriggered)
     }
     
     private func configureBuyButtonToBuy(usingSelectedPaymentOption paymentOptionLabel: String) {
         self.buyButton.setTitle("Buy Item using \(paymentOptionLabel)", for: .normal)
         self.buyButton.removeTarget(nil, action: nil, for: .allEvents)
-        self.buyButton.addTarget(self, action: #selector(requestPayment), for: .primaryActionTriggered)
-    }
-    
-    @objc private func presentPaymentOptions() {
-        self.stripeAPIClient.presentPaymentOptionsViewController()
-    }
-    
-    @objc private func requestPayment() {
-        self.stripeAPIClient.requestPayment()
+        self.buyButton.addTarget(stripeAPIClient, action: #selector(stripeAPIClient.requestPayment), for: .primaryActionTriggered)
     }
 }
 
