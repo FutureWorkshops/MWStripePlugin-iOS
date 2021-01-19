@@ -1,7 +1,7 @@
 PODS:
-  - MobileWorkflow (0.0.70):
-    - MobileWorkflow/Core (= 0.0.70)
-  - MobileWorkflow/Core (0.0.70)
+  - MobileWorkflow (0.0.75):
+    - MobileWorkflow/Core (= 0.0.75)
+  - MobileWorkflow/Core (0.0.75)
   - Stripe (21.2.0):
     - Stripe/Stripe3DS2 (= 21.2.0)
   - Stripe/Stripe3DS2 (21.2.0)
@@ -17,7 +17,7 @@ SPEC REPOS:
     - Stripe
 
 SPEC CHECKSUMS:
-  MobileWorkflow: c029e2f7af3b7c140aa5cee6fbfca8e76ff87576
+  MobileWorkflow: 1d41e65a1cc6ab2743f4ef97844f75326f0454d2
   Stripe: 37f742a4815882db4454188664a3aa61793a12b1
 
 PODFILE CHECKSUM: 047bbc33b7d5e510cdf222d8f2cb9eae9f11ef9e
