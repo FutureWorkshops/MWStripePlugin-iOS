@@ -114,19 +114,25 @@ extension MWStripeViewController: STPPaymentContextDelegate {
     }
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
-        // Call the createPaymentIntent
-        // Confirm the purchase when the result is sucess
         
-        //FIXME: This should come from the step & remove the force unwrap
-        var components = URLComponents(url: URL(string: "https://mw-stripe-dev1.herokuapp.com/create_payment_intent")!, resolvingAgainstBaseURL: false)!
+        guard var components = URLComponents(url: self.stripeStep.paymentIntentURL, resolvingAgainstBaseURL: false) else {
+            completion(.error, MWStripeError.failedToConstructPaymentIntentURL)
+            return
+        }
+        
+        //FIXME: This is temporary
         components.queryItems = [
             URLQueryItem(name: "email", value: "matt@futureworkshops.com"),
             URLQueryItem(name: "customer_id", value: "cus_Il1PzN4kcyTooT"),
             URLQueryItem(name: "product_id", value: "1")
         ]
         
-        // FIXME: Remove force unwrap
-        var request = URLRequest(url: components.url!)
+        guard let finalURL = components.url else {
+            completion(.error, MWStripeError.failedToConstructPaymentIntentURL)
+            return
+        }
+        
+        var request = URLRequest(url: finalURL)
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         
@@ -182,10 +188,12 @@ extension MWStripeViewController: STPPaymentContextDelegate {
 // MARK: Errors
 enum MWStripeError: LocalizedError {
     case failedToConstructEphemeralURL
+    case failedToConstructPaymentIntentURL
     
     var errorDescription: String? {
         switch self {
         case .failedToConstructEphemeralURL: return "Failed to construct the URL to retrieve the ephemeral key."
+        case .failedToConstructPaymentIntentURL: return "Failed to construct the URL to send the payment intent."
         }
     }
 }

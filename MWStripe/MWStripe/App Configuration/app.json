@@ -28,6 +28,7 @@
                     "ephemeralKeyURL": "https://mw-stripe-dev1.herokuapp.com/ephemeral_keys",
                     "identifier": "checkout",
                     "optional": false,
+                    "paymentIntentURL": "https://mw-stripe-dev1.herokuapp.com/create_payment_intent",
                     "publishableKey": "pk_test_d4ejnh3xJeBrQai1iX658cWA",
                     "title": "Checkout",
                     "type": "com.stripe.StripeBasicCheckout",
