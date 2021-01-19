@@ -8,7 +8,7 @@
 import Foundation
 import MobileWorkflowCore
 
-public class MWStripeStep: ORKStep {
+public class MWStripeStep: ORKInstructionStep {
     
     let publishableKey: String
     let ephemeralKeyURL: URL
