@@ -10,6 +10,7 @@
 		27305A7DDF1E274EE27A9B15 /* Pods_MWStripe_MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89027CD984BE1A10D2D62617 /* Pods_MWStripe_MWStripePlugin.framework */; };
 		2E71B9EDDC39A809FA474266 /* Pods_MWStripePluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A81699ABF12B0960470D1D2 /* Pods_MWStripePluginTests.framework */; };
 		B1D9971525B6EB4500E4ACF2 /* MWStripeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9971425B6EB4500E4ACF2 /* MWStripeAPIClient.swift */; };
+		B1D9973F25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9973E25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift */; };
 		B1FA1A0E25B089DA00384DCE /* MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */; };
 		B1FA1A1325B089DA00384DCE /* MWStripePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A1225B089DA00384DCE /* MWStripePluginTests.swift */; };
 		B1FA1A1525B089DA00384DCE /* MWStripePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -35,6 +36,7 @@
 		8196621F60109954924D45D1 /* Pods-MWStripe-MWStripePlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe-MWStripePlugin.release.xcconfig"; path = "Target Support Files/Pods-MWStripe-MWStripePlugin/Pods-MWStripe-MWStripePlugin.release.xcconfig"; sourceTree = "<group>"; };
 		89027CD984BE1A10D2D62617 /* Pods_MWStripe_MWStripePlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripe_MWStripePlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1D9971425B6EB4500E4ACF2 /* MWStripeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripeAPIClient.swift; sourceTree = "<group>"; };
+		B1D9973E25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripePurchaseResult.swift; sourceTree = "<group>"; };
 		B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MWStripePlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWStripePlugin.h; sourceTree = "<group>"; };
 		B1FA1A0825B089DA00384DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				B1FA1A4425B091E400384DCE /* MWStripeStep.swift */,
 				B1FA1A4825B091EB00384DCE /* MWStripeViewController.swift */,
 				B1D9971425B6EB4500E4ACF2 /* MWStripeAPIClient.swift */,
+				B1D9973E25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift */,
 			);
 			path = StripePlugin;
 			sourceTree = "<group>";
@@ -298,6 +301,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B1FA1A4525B091E400384DCE /* MWStripeStep.swift in Sources */,
+				B1D9973F25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift in Sources */,
 				B1FA1A4025B0918A00384DCE /* MWStripePlugin.swift in Sources */,
 				B1D9971525B6EB4500E4ACF2 /* MWStripeAPIClient.swift in Sources */,
 				B1FA1A4925B091EB00384DCE /* MWStripeViewController.swift in Sources */,

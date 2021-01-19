@@ -73,7 +73,13 @@ extension MWStripeViewController: MWStripeAPIClientDelegate {
                 self.goBackward()
             }
         case .success, .error:
-            //TODO: Store the result here
+            let success: Bool
+            switch result {
+            case .success: success = true
+            default: success = false
+            }
+            let result = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: success)
+            self.addResult(result)
             self.goForward()
         }
     }
