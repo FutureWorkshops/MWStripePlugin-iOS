@@ -41,11 +41,18 @@ extension MWStripeStep: MobileWorkflowStep {
               let paymentIntentURLString = stepInfo.data.content["paymentIntentURL"] as? String,
               let paymentIntentURL = URL(string: paymentIntentURLString),
               let customerID = stepInfo.data.content["customerId"] as? String {
-            return MWStripeStep(identifier: stepInfo.data.identifier,
-                                publishableKey: publishableKey,
-                                ephemeralKeyURL: ephemeralKeyURL,
-                                paymentIntentURL: paymentIntentURL,
-                                customerID: customerID)
+            let step = MWStripeStep(identifier: stepInfo.data.identifier,
+                                    publishableKey: publishableKey,
+                                    ephemeralKeyURL: ephemeralKeyURL,
+                                    paymentIntentURL: paymentIntentURL,
+                                    customerID: customerID)
+            step.text = stepInfo.data.content["text"] as? String
+            if let image = stepInfo.data.image {
+                step.image = image
+            } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
+                step.image = services.imageLoadingService.syncLoad(image: urlString)
+            }
+            return step
         } else {
             throw ParseError.invalidStepData(cause: "Missing publishableKey or ephemeralKeyURL")
         }
