@@ -20,6 +20,16 @@ public protocol MWStripeAPIClientDelegate: class {
     func paymentContextDidFinishWith(result: PaymentContextResult)
 }
 
+public struct MWStripeProduct {
+    let identifier: String
+    //FIXME: Change this hardcoded value when we support getting the price from the server
+    /// In cents, check STPPaymentContext.getter:paymentAmount for more info
+    let price: Int = 1000
+    //FIXME: Change this hardcoded value when we support multiple currencies
+    /// Three letter symbol, check STPPaymentContext.getter:paymentCurrency for more info
+    let currency = "USD"
+}
+
 public final class MWStripeAPIClient: NSObject {
     
     //MARK: Public properties
@@ -31,12 +41,16 @@ public final class MWStripeAPIClient: NSObject {
 
     //MARK: Private properties
     private let step: MWStripeStep
+    private let customerID: String
+    private let product: MWStripeProduct
     private var customerContext: STPCustomerContext?
     private var paymentContext: STPPaymentContext?
     
     //MARK: Lifecycle
-    public init(step: MWStripeStep) {
+    public init(step: MWStripeStep, customerID: String, product: MWStripeProduct) {
         self.step = step
+        self.customerID = customerID
+        self.product = product
         
         // Step 1 - Provide a publishable key to set up the SDK: https://stripe.com/docs/mobile/ios/basic#setup-ios
         StripeAPI.defaultPublishableKey = step.publishableKey
@@ -49,7 +63,8 @@ public final class MWStripeAPIClient: NSObject {
         // Step 4 - Set up an STPPaymentContext: https://stripe.com/docs/mobile/ios/basic#initialize-payment-context
         self.paymentContext = STPPaymentContext(customerContext: self.customerContext!)
         self.paymentContext?.delegate = self
-        self.paymentContext?.paymentAmount = 5000 // This is in cents, i.e. $50
+        self.paymentContext?.paymentAmount = self.product.price
+        self.paymentContext?.paymentCurrency = self.product.currency
     }
     
     // MARK: Methods to interact with the UI
@@ -76,7 +91,7 @@ extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
         //FIXME: Temporarly include a hardcoded email & customer ID
         var extraQueryItems = urlComponents.queryItems
         extraQueryItems?.append(URLQueryItem(name: "email", value: "matt@futureworkshops.com"))
-        extraQueryItems?.append(URLQueryItem(name: "customer_id", value: "cus_Il1PzN4kcyTooT"))
+        extraQueryItems?.append(URLQueryItem(name: "customer_id", value: self.customerID))
         urlComponents.queryItems = extraQueryItems
         
         var request = URLRequest(url: urlComponents.url!)
@@ -106,8 +121,8 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
         //FIXME: This is temporary
         components.queryItems = [
             URLQueryItem(name: "email", value: "matt@futureworkshops.com"),
-            URLQueryItem(name: "customer_id", value: "cus_Il1PzN4kcyTooT"),
-            URLQueryItem(name: "product_id", value: "1")
+            URLQueryItem(name: "customer_id", value: self.customerID),
+            URLQueryItem(name: "product_id", value: self.product.identifier)
         ]
         
         var request = URLRequest(url: components.url!)
