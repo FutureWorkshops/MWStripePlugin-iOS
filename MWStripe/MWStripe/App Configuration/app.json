@@ -15,14 +15,6 @@
             "name": "Browse",
             "navigationRules": [
                 {
-                    "from": "customer_id",
-                    "rules": [
-                        {
-                            "to": "products"
-                        }
-                    ]
-                },
-                {
                     "from": "products",
                     "rules": [
                         {
@@ -41,23 +33,6 @@
             ],
             "sfSymbolName": "",
             "steps": [
-                {
-                    "_class": "ORKQuestionStep",
-                    "answerFormat": {
-                        "_class": "ORKTextAnswerFormat",
-                        "multipleLines": true
-                    },
-                    "identifier": "customer_id",
-                    "optional": false,
-                    "question": "What is your customer ID?",
-                    "questionItems": [
-                        ""
-                    ],
-                    "questionMultipleAnswers": false,
-                    "title": "Customer ID",
-                    "type": "question",
-                    "uuid": "e879a868-cc15-49f4-8025-ee62f3e9967e"
-                },
                 {
                     "_class": "MobileWorkflowListStep",
                     "identifier": "products",
@@ -152,6 +127,7 @@
             "sfSymbolName": "",
             "steps": [
                 {
+                    "customerId": "cus_Il1PzN4kcyTooT",
                     "ephemeralKeyURL": "https://mw-stripe-dev1.herokuapp.com/ephemeral_keys",
                     "identifier": "checkout",
                     "optional": false,

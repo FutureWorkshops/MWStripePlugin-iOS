@@ -41,15 +41,13 @@ public final class MWStripeAPIClient: NSObject {
 
     //MARK: Private properties
     private let step: MWStripeStep
-    private let customerID: String
     private let product: MWStripeProduct
     private var customerContext: STPCustomerContext?
     private var paymentContext: STPPaymentContext?
     
     //MARK: Lifecycle
-    public init(step: MWStripeStep, customerID: String, product: MWStripeProduct) {
+    public init(step: MWStripeStep, product: MWStripeProduct) {
         self.step = step
-        self.customerID = customerID
         self.product = product
         
         // Step 1 - Provide a publishable key to set up the SDK: https://stripe.com/docs/mobile/ios/basic#setup-ios
@@ -91,7 +89,7 @@ extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
         //FIXME: Temporarly include a hardcoded email & customer ID
         var extraQueryItems = urlComponents.queryItems
         extraQueryItems?.append(URLQueryItem(name: "email", value: "matt@futureworkshops.com"))
-        extraQueryItems?.append(URLQueryItem(name: "customer_id", value: self.customerID))
+        extraQueryItems?.append(URLQueryItem(name: "customer_id", value: self.step.customerID))
         urlComponents.queryItems = extraQueryItems
         
         var request = URLRequest(url: urlComponents.url!)
@@ -121,7 +119,7 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
         //FIXME: This is temporary
         components.queryItems = [
             URLQueryItem(name: "email", value: "matt@futureworkshops.com"),
-            URLQueryItem(name: "customer_id", value: self.customerID),
+            URLQueryItem(name: "customer_id", value: self.step.customerID),
             URLQueryItem(name: "product_id", value: self.product.identifier)
         ]
         
