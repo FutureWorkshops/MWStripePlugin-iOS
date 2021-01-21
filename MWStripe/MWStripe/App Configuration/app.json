@@ -1,0 +1,164 @@
+{
+    "gatherAnalytics": false,
+    "id": 501,
+    "locales": [],
+    "name": "Stripe",
+    "navigationStyle": "primary_workflow",
+    "navigationWorkflow1Id": 929,
+    "servers": [],
+    "systemTintColor": "blue",
+    "workflows": [
+        {
+            "id": 929,
+            "identifier": "Browse",
+            "materialIconName": "",
+            "name": "Browse",
+            "navigationRules": [
+                {
+                    "from": "products",
+                    "rules": [
+                        {
+                            "to": "airpods"
+                        }
+                    ]
+                },
+                {
+                    "from": "airpods",
+                    "rules": [
+                        {
+                            "to": "ORKNullStepIdentifier"
+                        }
+                    ]
+                }
+            ],
+            "sfSymbolName": "",
+            "steps": [
+                {
+                    "_class": "MobileWorkflowListStep",
+                    "identifier": "products",
+                    "items": [
+                        {
+                            "detailText": "£10",
+                            "id": 1,
+                            "imageURL": "",
+                            "materialIconName": "",
+                            "sfSymbolName": "",
+                            "text": "AirPods"
+                        },
+                        {
+                            "detailText": "£360",
+                            "id": 2,
+                            "imageURL": "",
+                            "materialIconName": "",
+                            "sfSymbolName": "",
+                            "text": "iPhone"
+                        }
+                    ],
+                    "optional": false,
+                    "title": "Products",
+                    "type": "list",
+                    "uuid": "03c683c7-bc78-459f-bd36-adccee217f75",
+                    "workflows": []
+                },
+                {
+                    "_class": "MobileWorkflowDisplayStep",
+                    "identifier": "airpods",
+                    "items": [
+                        {
+                            "label": "Price",
+                            "text": "£10",
+                            "type": "text"
+                        },
+                        {
+                            "label": "Pay with Stripe",
+                            "modalWorkflow": "Checkout",
+                            "onSuccess": "none",
+                            "style": "primary",
+                            "type": "button"
+                        }
+                    ],
+                    "optional": false,
+                    "title": "AirPods",
+                    "type": "display",
+                    "uuid": "58213274-c267-4d61-92a8-dc5d40931f1c"
+                }
+            ]
+        },
+        {
+            "id": 903,
+            "identifier": "Checkout",
+            "materialIconName": "",
+            "name": "Checkout",
+            "navigationRules": [
+                {
+                    "from": "checkout",
+                    "rules": [
+                        {
+                            "operand": "==",
+                            "propertyKeyPath": "checkout.success",
+                            "to": "failed",
+                            "value": "false"
+                        },
+                        {
+                            "operand": "==",
+                            "propertyKeyPath": "checkout.success",
+                            "to": "purchased",
+                            "value": "true"
+                        }
+                    ]
+                },
+                {
+                    "from": "purchased",
+                    "rules": [
+                        {
+                            "to": "ORKNullStepIdentifier"
+                        }
+                    ]
+                },
+                {
+                    "from": "failed",
+                    "rules": [
+                        {
+                            "to": "ORKNullStepIdentifier"
+                        }
+                    ]
+                }
+            ],
+            "sfSymbolName": "",
+            "steps": [
+                {
+                    "customerId": "cus_Il1PzN4kcyTooT",
+                    "ephemeralKeyURL": "https://mw-stripe-dev1.herokuapp.com/ephemeral_keys",
+                    "identifier": "checkout",
+                    "imageURL": "https://source.unsplash.com/gSZCLsE7ysc/800x600",
+                    "optional": false,
+                    "paymentIntentURL": "https://mw-stripe-dev1.herokuapp.com/create_payment_intent",
+                    "productId": "1",
+                    "publishableKey": "pk_test_d4ejnh3xJeBrQai1iX658cWA",
+                    "text": "Please, select the payment option that you prefer and then confirm the purchase via Stripe.",
+                    "title": "Checkout",
+                    "type": "com.stripe.StripeBasicCheckout",
+                    "uuid": "17bd967d-05a8-4165-a8a1-3c6f0694aea8"
+                },
+                {
+                    "_class": "ORKCompletionStep",
+                    "identifier": "purchased",
+                    "imageContentMode": 2,
+                    "optional": false,
+                    "title": "Purchased",
+                    "type": "completion",
+                    "uuid": "84d2963b-21c1-42b1-a6f6-84aec1cac1ed"
+                },
+                {
+                    "_class": "ORKInstructionStep",
+                    "identifier": "failed",
+                    "imageContentMode": 2,
+                    "optional": false,
+                    "title": "Failed",
+                    "type": "instructions",
+                    "uuid": "0bfcaa9c-cacf-4db7-8efd-79b8249b26f4"
+                }
+            ]
+        }
+    ]
+}

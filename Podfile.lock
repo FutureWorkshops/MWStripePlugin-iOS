@@ -1,3 +1,25 @@
-PODFILE CHECKSUM: 43412fbbde22765c28496ef3bdb072d38fbbf8c2
+PODS:
+  - MobileWorkflow (0.0.75):
+    - MobileWorkflow/Core (= 0.0.75)
+  - MobileWorkflow/Core (0.0.75)
+  - Stripe (21.2.0):
+    - Stripe/Stripe3DS2 (= 21.2.0)
+  - Stripe/Stripe3DS2 (21.2.0)
+
+DEPENDENCIES:
+  - MobileWorkflow
+  - Stripe
+
+SPEC REPOS:
+  https://github.com/FutureWorkshops/MWPodspecs.git:
+    - MobileWorkflow
+  trunk:
+    - Stripe
+
+SPEC CHECKSUMS:
+  MobileWorkflow: 1d41e65a1cc6ab2743f4ef97844f75326f0454d2
+  Stripe: 37f742a4815882db4454188664a3aa61793a12b1
+
+PODFILE CHECKSUM: 047bbc33b7d5e510cdf222d8f2cb9eae9f11ef9e
 
 COCOAPODS: 1.10.0

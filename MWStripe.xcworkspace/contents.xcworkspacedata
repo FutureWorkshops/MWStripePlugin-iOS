@@ -5,6 +5,9 @@
       location = "group:MWStripe/MWStripe.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:MWStripePlugin/MWStripePlugin.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

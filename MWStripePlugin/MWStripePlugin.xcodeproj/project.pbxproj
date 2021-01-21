@@ -1,0 +1,580 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		27305A7DDF1E274EE27A9B15 /* Pods_MWStripe_MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89027CD984BE1A10D2D62617 /* Pods_MWStripe_MWStripePlugin.framework */; };
+		2E71B9EDDC39A809FA474266 /* Pods_MWStripePluginTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A81699ABF12B0960470D1D2 /* Pods_MWStripePluginTests.framework */; };
+		B1D9971525B6EB4500E4ACF2 /* MWStripeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9971425B6EB4500E4ACF2 /* MWStripeAPIClient.swift */; };
+		B1D9973F25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D9973E25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift */; };
+		B1FA1A0E25B089DA00384DCE /* MWStripePlugin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */; };
+		B1FA1A1325B089DA00384DCE /* MWStripePluginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A1225B089DA00384DCE /* MWStripePluginTests.swift */; };
+		B1FA1A1525B089DA00384DCE /* MWStripePlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B1FA1A4025B0918A00384DCE /* MWStripePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A3F25B0918A00384DCE /* MWStripePlugin.swift */; };
+		B1FA1A4525B091E400384DCE /* MWStripeStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A4425B091E400384DCE /* MWStripeStep.swift */; };
+		B1FA1A4925B091EB00384DCE /* MWStripeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FA1A4825B091EB00384DCE /* MWStripeViewController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B1FA1A0F25B089DA00384DCE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1FA19FB25B089DA00384DCE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B1FA1A0325B089DA00384DCE;
+			remoteInfo = MWStripePlugin;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1C142F139FBB4BA5C7597301 /* Pods-MWStripePluginTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripePluginTests.debug.xcconfig"; path = "Target Support Files/Pods-MWStripePluginTests/Pods-MWStripePluginTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2C72E25B63F1758ABB572D17 /* Pods-MWStripe-MWStripePlugin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe-MWStripePlugin.debug.xcconfig"; path = "Target Support Files/Pods-MWStripe-MWStripePlugin/Pods-MWStripe-MWStripePlugin.debug.xcconfig"; sourceTree = "<group>"; };
+		6A81699ABF12B0960470D1D2 /* Pods_MWStripePluginTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripePluginTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8196621F60109954924D45D1 /* Pods-MWStripe-MWStripePlugin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripe-MWStripePlugin.release.xcconfig"; path = "Target Support Files/Pods-MWStripe-MWStripePlugin/Pods-MWStripe-MWStripePlugin.release.xcconfig"; sourceTree = "<group>"; };
+		89027CD984BE1A10D2D62617 /* Pods_MWStripe_MWStripePlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MWStripe_MWStripePlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1D9971425B6EB4500E4ACF2 /* MWStripeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripeAPIClient.swift; sourceTree = "<group>"; };
+		B1D9973E25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripePurchaseResult.swift; sourceTree = "<group>"; };
+		B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MWStripePlugin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWStripePlugin.h; sourceTree = "<group>"; };
+		B1FA1A0825B089DA00384DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1FA1A0D25B089DA00384DCE /* MWStripePluginTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MWStripePluginTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1FA1A1225B089DA00384DCE /* MWStripePluginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripePluginTests.swift; sourceTree = "<group>"; };
+		B1FA1A1425B089DA00384DCE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1FA1A3F25B0918A00384DCE /* MWStripePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripePlugin.swift; sourceTree = "<group>"; };
+		B1FA1A4425B091E400384DCE /* MWStripeStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripeStep.swift; sourceTree = "<group>"; };
+		B1FA1A4825B091EB00384DCE /* MWStripeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MWStripeViewController.swift; sourceTree = "<group>"; };
+		B709C4171B24C94BEDD09502 /* Pods-MWStripePluginTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MWStripePluginTests.release.xcconfig"; path = "Target Support Files/Pods-MWStripePluginTests/Pods-MWStripePluginTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B1FA1A0125B089DA00384DCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27305A7DDF1E274EE27A9B15 /* Pods_MWStripe_MWStripePlugin.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1FA1A0A25B089DA00384DCE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1FA1A0E25B089DA00384DCE /* MWStripePlugin.framework in Frameworks */,
+				2E71B9EDDC39A809FA474266 /* Pods_MWStripePluginTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F0A2599B88669E9F1B99CE4 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2C72E25B63F1758ABB572D17 /* Pods-MWStripe-MWStripePlugin.debug.xcconfig */,
+				8196621F60109954924D45D1 /* Pods-MWStripe-MWStripePlugin.release.xcconfig */,
+				1C142F139FBB4BA5C7597301 /* Pods-MWStripePluginTests.debug.xcconfig */,
+				B709C4171B24C94BEDD09502 /* Pods-MWStripePluginTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = ../Pods;
+			sourceTree = "<group>";
+		};
+		AA7BA7CF5FD2C70147940D16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				89027CD984BE1A10D2D62617 /* Pods_MWStripe_MWStripePlugin.framework */,
+				6A81699ABF12B0960470D1D2 /* Pods_MWStripePluginTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B1FA19FA25B089DA00384DCE = {
+			isa = PBXGroup;
+			children = (
+				B1FA1A0625B089DA00384DCE /* MWStripePlugin */,
+				B1FA1A1125B089DA00384DCE /* MWStripePluginTests */,
+				B1FA1A0525B089DA00384DCE /* Products */,
+				1F0A2599B88669E9F1B99CE4 /* Pods */,
+				AA7BA7CF5FD2C70147940D16 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		B1FA1A0525B089DA00384DCE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */,
+				B1FA1A0D25B089DA00384DCE /* MWStripePluginTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B1FA1A0625B089DA00384DCE /* MWStripePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA1A3F25B0918A00384DCE /* MWStripePlugin.swift */,
+				B1FA1A4325B091D900384DCE /* StripePlugin */,
+				B1FA1A0725B089DA00384DCE /* MWStripePlugin.h */,
+				B1FA1A0825B089DA00384DCE /* Info.plist */,
+			);
+			path = MWStripePlugin;
+			sourceTree = "<group>";
+		};
+		B1FA1A1125B089DA00384DCE /* MWStripePluginTests */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA1A1225B089DA00384DCE /* MWStripePluginTests.swift */,
+				B1FA1A1425B089DA00384DCE /* Info.plist */,
+			);
+			path = MWStripePluginTests;
+			sourceTree = "<group>";
+		};
+		B1FA1A4325B091D900384DCE /* StripePlugin */ = {
+			isa = PBXGroup;
+			children = (
+				B1FA1A4425B091E400384DCE /* MWStripeStep.swift */,
+				B1FA1A4825B091EB00384DCE /* MWStripeViewController.swift */,
+				B1D9971425B6EB4500E4ACF2 /* MWStripeAPIClient.swift */,
+				B1D9973E25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift */,
+			);
+			path = StripePlugin;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		B1FA19FF25B089DA00384DCE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1FA1A1525B089DA00384DCE /* MWStripePlugin.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B1FA1A0325B089DA00384DCE /* MWStripePlugin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1FA1A1825B089DA00384DCE /* Build configuration list for PBXNativeTarget "MWStripePlugin" */;
+			buildPhases = (
+				F376F3CEDDBB2D9B89D2655C /* [CP] Check Pods Manifest.lock */,
+				B1FA19FF25B089DA00384DCE /* Headers */,
+				B1FA1A0025B089DA00384DCE /* Sources */,
+				B1FA1A0125B089DA00384DCE /* Frameworks */,
+				B1FA1A0225B089DA00384DCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MWStripePlugin;
+			productName = MWStripePlugin;
+			productReference = B1FA1A0425B089DA00384DCE /* MWStripePlugin.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B1FA1A0C25B089DA00384DCE /* MWStripePluginTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1FA1A1B25B089DA00384DCE /* Build configuration list for PBXNativeTarget "MWStripePluginTests" */;
+			buildPhases = (
+				D64BB3B055E8E7E1B6007535 /* [CP] Check Pods Manifest.lock */,
+				B1FA1A0925B089DA00384DCE /* Sources */,
+				B1FA1A0A25B089DA00384DCE /* Frameworks */,
+				B1FA1A0B25B089DA00384DCE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B1FA1A1025B089DA00384DCE /* PBXTargetDependency */,
+			);
+			name = MWStripePluginTests;
+			productName = MWStripePluginTests;
+			productReference = B1FA1A0D25B089DA00384DCE /* MWStripePluginTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B1FA19FB25B089DA00384DCE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1230;
+				LastUpgradeCheck = 1230;
+				TargetAttributes = {
+					B1FA1A0325B089DA00384DCE = {
+						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
+					};
+					B1FA1A0C25B089DA00384DCE = {
+						CreatedOnToolsVersion = 12.3;
+					};
+				};
+			};
+			buildConfigurationList = B1FA19FE25B089DA00384DCE /* Build configuration list for PBXProject "MWStripePlugin" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B1FA19FA25B089DA00384DCE;
+			productRefGroup = B1FA1A0525B089DA00384DCE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B1FA1A0325B089DA00384DCE /* MWStripePlugin */,
+				B1FA1A0C25B089DA00384DCE /* MWStripePluginTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B1FA1A0225B089DA00384DCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1FA1A0B25B089DA00384DCE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D64BB3B055E8E7E1B6007535 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MWStripePluginTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F376F3CEDDBB2D9B89D2655C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MWStripe-MWStripePlugin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B1FA1A0025B089DA00384DCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1FA1A4525B091E400384DCE /* MWStripeStep.swift in Sources */,
+				B1D9973F25B73A8C00E4ACF2 /* MWStripePurchaseResult.swift in Sources */,
+				B1FA1A4025B0918A00384DCE /* MWStripePlugin.swift in Sources */,
+				B1D9971525B6EB4500E4ACF2 /* MWStripeAPIClient.swift in Sources */,
+				B1FA1A4925B091EB00384DCE /* MWStripeViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1FA1A0925B089DA00384DCE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1FA1A1325B089DA00384DCE /* MWStripePluginTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B1FA1A1025B089DA00384DCE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B1FA1A0325B089DA00384DCE /* MWStripePlugin */;
+			targetProxy = B1FA1A0F25B089DA00384DCE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B1FA1A1625B089DA00384DCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		B1FA1A1725B089DA00384DCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B1FA1A1925B089DA00384DCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C72E25B63F1758ABB572D17 /* Pods-MWStripe-MWStripePlugin.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BQHMJ2C6RL;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MWStripePlugin/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.mobileworkflow.MWStripePlugin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		B1FA1A1A25B089DA00384DCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8196621F60109954924D45D1 /* Pods-MWStripe-MWStripePlugin.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BQHMJ2C6RL;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = MWStripePlugin/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.mobileworkflow.MWStripePlugin;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B1FA1A1C25B089DA00384DCE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C142F139FBB4BA5C7597301 /* Pods-MWStripePluginTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BQHMJ2C6RL;
+				INFOPLIST_FILE = MWStripePluginTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.mobileworkflow.MWStripePluginTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B1FA1A1D25B089DA00384DCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B709C4171B24C94BEDD09502 /* Pods-MWStripePluginTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = BQHMJ2C6RL;
+				INFOPLIST_FILE = MWStripePluginTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.mobileworkflow.MWStripePluginTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B1FA19FE25B089DA00384DCE /* Build configuration list for PBXProject "MWStripePlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1FA1A1625B089DA00384DCE /* Debug */,
+				B1FA1A1725B089DA00384DCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1FA1A1825B089DA00384DCE /* Build configuration list for PBXNativeTarget "MWStripePlugin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1FA1A1925B089DA00384DCE /* Debug */,
+				B1FA1A1A25B089DA00384DCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B1FA1A1B25B089DA00384DCE /* Build configuration list for PBXNativeTarget "MWStripePluginTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1FA1A1C25B089DA00384DCE /* Debug */,
+				B1FA1A1D25B089DA00384DCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B1FA19FB25B089DA00384DCE /* Project object */;
+}
