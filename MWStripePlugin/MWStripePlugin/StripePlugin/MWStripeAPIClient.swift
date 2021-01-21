@@ -70,13 +70,10 @@ extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
     public func createCustomerKey(withAPIVersion apiVersion: String, completion: @escaping STPJSONResponseCompletionBlock) {
         var urlComponents = URLComponents(url: self.step.ephemeralKeyURL, resolvingAgainstBaseURL: false)!
         
-        urlComponents.queryItems = [URLQueryItem(name: "api_version", value: apiVersion)]
-        
-        //FIXME: Temporarly include a hardcoded email & customer ID
-        var extraQueryItems = urlComponents.queryItems
-        extraQueryItems?.append(URLQueryItem(name: "email", value: "matt@futureworkshops.com"))
-        extraQueryItems?.append(URLQueryItem(name: "customer_id", value: self.step.customerID))
-        urlComponents.queryItems = extraQueryItems
+        urlComponents.queryItems = [
+            URLQueryItem(name: "api_version", value: apiVersion),
+            URLQueryItem(name: "customer_id", value: self.step.customerID)
+        ]
         
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "POST"
