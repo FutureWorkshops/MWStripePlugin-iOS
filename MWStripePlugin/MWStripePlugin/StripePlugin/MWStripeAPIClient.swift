@@ -102,9 +102,7 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
         
         var components = URLComponents(url: self.step.paymentIntentURL, resolvingAgainstBaseURL: false)!
         
-        //FIXME: This is temporary
         components.queryItems = [
-            URLQueryItem(name: "email", value: "matt@futureworkshops.com"),
             URLQueryItem(name: "customer_id", value: self.step.customerID),
             URLQueryItem(name: "product_id", value: self.step.productID)
         ]
