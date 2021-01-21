@@ -58,7 +58,7 @@ extension MWStripeStep: MobileWorkflowStep {
             }
             return step
         } else {
-            throw ParseError.invalidStepData(cause: "Missing publishableKey or ephemeralKeyURL")
+            throw ParseError.invalidStepData(cause: "Missing required field from the JSON to build a valid MWStripeStep")
         }
     }
 }
