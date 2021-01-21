@@ -18,10 +18,7 @@ public class MWStripeViewController: ORKInstructionStepViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        //TODO: Get the identifier from the selected product that triggered this flow
-        let productToBuy = MWStripeProduct(identifier: "1")
-        
-        self.stripeAPIClient = MWStripeAPIClient(step: self.stripeStep, product: productToBuy)
+        self.stripeAPIClient = MWStripeAPIClient(step: self.stripeStep)
         self.stripeAPIClient.delegate = self
         self.stripeAPIClient.paymentContextHostViewController = self
         

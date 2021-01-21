@@ -15,12 +15,14 @@ public class MWStripeStep: ORKInstructionStep {
     let paymentIntentURL: URL
     //TODO: This is just for testing, it should be removed
     let customerID: String
+    let productID: String
     
-    init(identifier: String, publishableKey: String, ephemeralKeyURL: URL, paymentIntentURL: URL, customerID: String) {
+    init(identifier: String, publishableKey: String, ephemeralKeyURL: URL, paymentIntentURL: URL, customerID: String, productID: String) {
         self.publishableKey = publishableKey
         self.ephemeralKeyURL = ephemeralKeyURL
         self.paymentIntentURL = paymentIntentURL
         self.customerID = customerID
+        self.productID = productID
         super.init(identifier: identifier)
     }
     
@@ -40,12 +42,14 @@ extension MWStripeStep: MobileWorkflowStep {
               let ephemeralKeyURL = URL(string: ephemeralKeyURLString),
               let paymentIntentURLString = stepInfo.data.content["paymentIntentURL"] as? String,
               let paymentIntentURL = URL(string: paymentIntentURLString),
-              let customerID = stepInfo.data.content["customerId"] as? String {
+              let customerID = stepInfo.data.content["customerId"] as? String,
+              let productID = stepInfo.data.content["productId"] as? String {
             let step = MWStripeStep(identifier: stepInfo.data.identifier,
                                     publishableKey: publishableKey,
                                     ephemeralKeyURL: ephemeralKeyURL,
                                     paymentIntentURL: paymentIntentURL,
-                                    customerID: customerID)
+                                    customerID: customerID,
+                                    productID: productID)
             step.text = stepInfo.data.content["text"] as? String
             if let image = stepInfo.data.image {
                 step.image = image

@@ -130,9 +130,12 @@
                     "customerId": "cus_Il1PzN4kcyTooT",
                     "ephemeralKeyURL": "https://mw-stripe-dev1.herokuapp.com/ephemeral_keys",
                     "identifier": "checkout",
+                    "imageURL": "https://source.unsplash.com/IahKTlr7c7I/800x600",
                     "optional": false,
                     "paymentIntentURL": "https://mw-stripe-dev1.herokuapp.com/create_payment_intent",
+                    "productId": "1",
                     "publishableKey": "pk_test_d4ejnh3xJeBrQai1iX658cWA",
+                    "text": "Please, select the payment option that you prefer and then confirm the purchase via Stripe.",
                     "title": "Checkout",
                     "type": "com.stripe.StripeBasicCheckout",
                     "uuid": "17bd967d-05a8-4165-a8a1-3c6f0694aea8"

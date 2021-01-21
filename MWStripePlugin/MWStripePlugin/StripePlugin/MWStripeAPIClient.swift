@@ -20,16 +20,6 @@ public protocol MWStripeAPIClientDelegate: class {
     func paymentContextDidFinishWith(result: PaymentContextResult)
 }
 
-public struct MWStripeProduct {
-    let identifier: String
-    //FIXME: Change this hardcoded value when we support getting the price from the server
-    /// In cents, check STPPaymentContext.getter:paymentAmount for more info
-    let price: Int = 1000
-    //FIXME: Change this hardcoded value when we support multiple currencies
-    /// Three letter symbol, check STPPaymentContext.getter:paymentCurrency for more info
-    let currency = "USD"
-}
-
 public final class MWStripeAPIClient: NSObject {
     
     //MARK: Public properties
@@ -41,14 +31,12 @@ public final class MWStripeAPIClient: NSObject {
 
     //MARK: Private properties
     private let step: MWStripeStep
-    private let product: MWStripeProduct
     private var customerContext: STPCustomerContext?
     private var paymentContext: STPPaymentContext?
     
     //MARK: Lifecycle
-    public init(step: MWStripeStep, product: MWStripeProduct) {
+    public init(step: MWStripeStep) {
         self.step = step
-        self.product = product
         
         // Step 1 - Provide a publishable key to set up the SDK: https://stripe.com/docs/mobile/ios/basic#setup-ios
         StripeAPI.defaultPublishableKey = step.publishableKey
@@ -61,8 +49,6 @@ public final class MWStripeAPIClient: NSObject {
         // Step 4 - Set up an STPPaymentContext: https://stripe.com/docs/mobile/ios/basic#initialize-payment-context
         self.paymentContext = STPPaymentContext(customerContext: self.customerContext!)
         self.paymentContext?.delegate = self
-        self.paymentContext?.paymentAmount = self.product.price
-        self.paymentContext?.paymentCurrency = self.product.currency
     }
     
     // MARK: Methods to interact with the UI
@@ -120,7 +106,7 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
         components.queryItems = [
             URLQueryItem(name: "email", value: "matt@futureworkshops.com"),
             URLQueryItem(name: "customer_id", value: self.step.customerID),
-            URLQueryItem(name: "product_id", value: self.product.identifier)
+            URLQueryItem(name: "product_id", value: self.step.productID)
         ]
         
         var request = URLRequest(url: components.url!)
