@@ -130,7 +130,7 @@
                     "customerId": "cus_Il1PzN4kcyTooT",
                     "ephemeralKeyURL": "https://mw-stripe-dev1.herokuapp.com/ephemeral_keys",
                     "identifier": "checkout",
-                    "imageURL": "https://source.unsplash.com/IahKTlr7c7I/800x600",
+                    "imageURL": "https://source.unsplash.com/gSZCLsE7ysc/800x600",
                     "optional": false,
                     "paymentIntentURL": "https://mw-stripe-dev1.herokuapp.com/create_payment_intent",
                     "productId": "1",
