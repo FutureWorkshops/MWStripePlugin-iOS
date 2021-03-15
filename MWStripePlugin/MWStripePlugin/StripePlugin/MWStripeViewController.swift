@@ -18,7 +18,7 @@ public class MWStripeViewController: ORKInstructionStepViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.stripeAPIClient = MWStripeAPIClient(step: self.stripeStep)
+        self.stripeAPIClient = MWStripeAPIClient(step: self.stripeStep, session: self.stripeStep.session)
         self.stripeAPIClient.delegate = self
         self.stripeAPIClient.paymentContextHostViewController = self
         
