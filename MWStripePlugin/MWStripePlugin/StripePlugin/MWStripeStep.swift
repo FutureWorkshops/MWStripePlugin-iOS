@@ -54,7 +54,7 @@ extension MWStripeStep: MobileWorkflowStep {
             if let image = stepInfo.data.image {
                 step.image = image
             } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
-                step.image = services.imageLoadingService.syncLoad(image: urlString)
+                step.image = services.imageLoadingService.syncLoad(image: urlString, session: stepInfo.session)
             }
             return step
         } else {
