@@ -107,7 +107,7 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
         guard let paymentIntentURL = self.session.resolve(url: self.step.paymentIntentUrl) else {
-            completion(nil, URLError(.badURL))
+            completion(.error, URLError(.badURL))
             return
         }
         
