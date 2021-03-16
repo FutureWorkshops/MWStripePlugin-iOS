@@ -11,18 +11,19 @@ import MobileWorkflowCore
 public class MWStripeStep: ORKInstructionStep {
     
     let publishableKey: String
-    let ephemeralKeyURL: URL
-    let paymentIntentURL: URL
-    //TODO: This is just for testing, it should be removed
-    let customerID: String
+    let ephemeralKeyUrl: String
+    let paymentIntentUrl: String
+    let customerID: String?
     let productID: String
+    let session: Session
     
-    init(identifier: String, publishableKey: String, ephemeralKeyURL: URL, paymentIntentURL: URL, customerID: String, productID: String) {
+    init(identifier: String, publishableKey: String, ephemeralKeyUrl: String, paymentIntentUrl: String, customerID: String?, productID: String, session: Session) {
         self.publishableKey = publishableKey
-        self.ephemeralKeyURL = ephemeralKeyURL
-        self.paymentIntentURL = paymentIntentURL
+        self.ephemeralKeyUrl = ephemeralKeyUrl
+        self.paymentIntentUrl = paymentIntentUrl
         self.customerID = customerID
         self.productID = productID
+        self.session = session
         super.init(identifier: identifier)
     }
     
@@ -37,28 +38,32 @@ public class MWStripeStep: ORKInstructionStep {
 
 extension MWStripeStep: MobileWorkflowStep {
     public static func build(step stepInfo: StepInfo, services: MobileWorkflowServices) throws -> ORKStep {
-        if let publishableKey = stepInfo.data.content["publishableKey"] as? String,
-              let ephemeralKeyURLString = stepInfo.data.content["ephemeralKeyURL"] as? String,
-              let ephemeralKeyURL = URL(string: ephemeralKeyURLString),
-              let paymentIntentURLString = stepInfo.data.content["paymentIntentURL"] as? String,
-              let paymentIntentURL = URL(string: paymentIntentURLString),
-              let customerID = stepInfo.data.content["customerId"] as? String,
-              let productID = stepInfo.data.content["productId"] as? String {
-            let step = MWStripeStep(identifier: stepInfo.data.identifier,
-                                    publishableKey: publishableKey,
-                                    ephemeralKeyURL: ephemeralKeyURL,
-                                    paymentIntentURL: paymentIntentURL,
-                                    customerID: customerID,
-                                    productID: productID)
-            step.text = stepInfo.data.content["text"] as? String
-            if let image = stepInfo.data.image {
-                step.image = image
-            } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
-                step.image = services.imageLoadingService.syncLoad(image: urlString, session: stepInfo.session)
-            }
-            return step
-        } else {
-            throw ParseError.invalidStepData(cause: "Missing required field from the JSON to build a valid MWStripeStep")
+        guard let publishableKey = stepInfo.data.content["publishableKey"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing required field: publishableKey")
         }
+        guard let ephemeralKeyUrl = stepInfo.data.content["ephemeralKeyURL"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing required field: ephemeralKeyURL")
+        }
+        guard let paymentIntentUrl = stepInfo.data.content["paymentIntentURL"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing required field: paymentIntentUrl")
+        }
+        guard let productID = stepInfo.data.content["productId"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing required field: productId")
+        }
+        
+        let step = MWStripeStep(identifier: stepInfo.data.identifier,
+                                publishableKey: publishableKey,
+                                ephemeralKeyUrl: ephemeralKeyUrl,
+                                paymentIntentUrl: paymentIntentUrl,
+                                customerID: stepInfo.data.content["customerId"] as? String, // optional
+                                productID: productID,
+                                session: stepInfo.session)
+        step.text = stepInfo.data.content["text"] as? String
+        if let image = stepInfo.data.image {
+            step.image = image
+        } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
+            step.image = services.imageLoadingService.syncLoad(image: urlString, session: stepInfo.session)
+        }
+        return step
     }
 }

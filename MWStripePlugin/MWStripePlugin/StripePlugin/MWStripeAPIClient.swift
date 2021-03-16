@@ -7,6 +7,7 @@
 
 import Foundation
 import Stripe
+import MobileWorkflowCore
 
 public enum PaymentContextResult {
     case success
@@ -31,12 +32,14 @@ public final class MWStripeAPIClient: NSObject {
 
     //MARK: Private properties
     private let step: MWStripeStep
+    private let session: Session
     private var customerContext: STPCustomerContext?
     private var paymentContext: STPPaymentContext?
     
     //MARK: Lifecycle
-    public init(step: MWStripeStep) {
+    public init(step: MWStripeStep, session: Session) {
         self.step = step
+        self.session = session
         
         // Step 1 - Provide a publishable key to set up the SDK: https://stripe.com/docs/mobile/ios/basic#setup-ios
         StripeAPI.defaultPublishableKey = step.publishableKey
@@ -68,12 +71,19 @@ public final class MWStripeAPIClient: NSObject {
 extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
     // This method is called automatically after you create an `STPCustomerContext`
     public func createCustomerKey(withAPIVersion apiVersion: String, completion: @escaping STPJSONResponseCompletionBlock) {
-        var urlComponents = URLComponents(url: self.step.ephemeralKeyURL, resolvingAgainstBaseURL: false)!
+        guard let ephemeralKeyURL = self.session.resolve(url: self.step.ephemeralKeyUrl) else {
+            completion(nil, URLError(.badURL))
+            return
+        }
+        
+        var urlComponents = URLComponents(url: ephemeralKeyURL, resolvingAgainstBaseURL: false)!
         
         urlComponents.queryItems = [
             URLQueryItem(name: "api_version", value: apiVersion),
-            URLQueryItem(name: "customer_id", value: self.step.customerID)
         ]
+        if let customerId = self.step.customerID {
+            urlComponents.queryItems?.append(URLQueryItem(name: "customer_id", value: self.step.customerID))
+        }
         
         var request = URLRequest(url: urlComponents.url!)
         request.httpMethod = "POST"
@@ -96,8 +106,12 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
     }
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
+        guard let paymentIntentURL = self.session.resolve(url: self.step.paymentIntentUrl) else {
+            completion(nil, URLError(.badURL))
+            return
+        }
         
-        var components = URLComponents(url: self.step.paymentIntentURL, resolvingAgainstBaseURL: false)!
+        var components = URLComponents(url: paymentIntentURL, resolvingAgainstBaseURL: false)!
         
         components.queryItems = [
             URLQueryItem(name: "customer_id", value: self.step.customerID),
