@@ -72,7 +72,8 @@ extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
     // This method is called automatically after you create an `STPCustomerContext`
     public func createCustomerKey(withAPIVersion apiVersion: String, completion: @escaping STPJSONResponseCompletionBlock) {
         guard let ephemeralKeyURL = self.session.resolve(url: self.step.ephemeralKeyUrl) else {
-            preconditionFailure()
+            completion(nil, URLError(.badURL))
+            return
         }
         
         var urlComponents = URLComponents(url: ephemeralKeyURL, resolvingAgainstBaseURL: false)!
@@ -106,7 +107,8 @@ extension MWStripeAPIClient: STPPaymentContextDelegate {
     
     public func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPPaymentStatusBlock) {
         guard let paymentIntentURL = self.session.resolve(url: self.step.paymentIntentUrl) else {
-            preconditionFailure()
+            completion(nil, URLError(.badURL))
+            return
         }
         
         var components = URLComponents(url: paymentIntentURL, resolvingAgainstBaseURL: false)!
