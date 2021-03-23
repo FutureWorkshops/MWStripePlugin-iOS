@@ -82,7 +82,7 @@ extension MWStripeAPIClient: STPCustomerEphemeralKeyProvider {
             URLQueryItem(name: "api_version", value: apiVersion),
         ]
         if let customerId = self.step.customerID {
-            urlComponents.queryItems?.append(URLQueryItem(name: "customer_id", value: self.step.customerID))
+            urlComponents.queryItems?.append(URLQueryItem(name: "customer_id", value: customerId))
         }
         
         var request = URLRequest(url: urlComponents.url!)
