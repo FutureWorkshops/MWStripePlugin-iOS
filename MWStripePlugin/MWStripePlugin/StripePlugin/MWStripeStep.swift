@@ -37,7 +37,7 @@ public class MWStripeStep: ORKInstructionStep {
 }
 
 extension MWStripeStep: MobileWorkflowStep {
-    public static func build(step stepInfo: StepInfo, services: MobileWorkflowServices) throws -> ORKStep {
+    public static func build(stepInfo: StepInfo, services: MobileWorkflowServices) throws -> Step {
         guard let publishableKey = stepInfo.data.content["publishableKey"] as? String else {
             throw ParseError.invalidStepData(cause: "Missing required field: publishableKey")
         }
@@ -51,19 +51,19 @@ extension MWStripeStep: MobileWorkflowStep {
             throw ParseError.invalidStepData(cause: "Missing required field: productId")
         }
         
-        let step = MWStripeStep(identifier: stepInfo.data.identifier,
+        let theStep = MWStripeStep(identifier: stepInfo.data.identifier,
                                 publishableKey: publishableKey,
                                 ephemeralKeyUrl: ephemeralKeyUrl,
                                 paymentIntentUrl: paymentIntentUrl,
                                 customerID: stepInfo.data.content["customerId"] as? String, // optional
                                 productID: productID,
                                 session: stepInfo.session)
-        step.text = stepInfo.data.content["text"] as? String
+        theStep.text = stepInfo.data.content["text"] as? String
         if let image = stepInfo.data.image {
-            step.image = image
+            theStep.image = image
         } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
-            step.image = services.imageLoadingService.syncLoad(image: urlString, session: stepInfo.session)
+            theStep.image = services.imageLoadingService.syncLoad(image: urlString, session: stepInfo.session)
         }
-        return step
+        return theStep
     }
 }
