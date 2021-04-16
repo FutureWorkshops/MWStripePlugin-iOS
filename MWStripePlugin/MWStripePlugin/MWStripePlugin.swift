@@ -21,7 +21,7 @@ public enum MWStripeStepType: String, StepType, CaseIterable {
         return self.rawValue
     }
     
-    public var stepClass: MobileWorkflowStep.Type {
+    public var stepClass: BuildableStep.Type {
         switch self {
         case .basicCheckout: return MWStripeStep.self
         }
