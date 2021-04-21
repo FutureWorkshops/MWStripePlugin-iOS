@@ -36,8 +36,8 @@ public class MWStripeStep: ORKInstructionStep {
     }
 }
 
-extension MWStripeStep: MobileWorkflowStep {
-    public static func build(stepInfo: StepInfo, services: MobileWorkflowServices) throws -> Step {
+extension MWStripeStep: BuildableStep {
+    public static func build(stepInfo: StepInfo, services: StepServices) throws -> Step {
         guard let publishableKey = stepInfo.data.content["publishableKey"] as? String else {
             throw ParseError.invalidStepData(cause: "Missing required field: publishableKey")
         }

@@ -10,7 +10,7 @@ import UIKit
 import MWStripePlugin
 import MobileWorkflowCore
 
-class SceneDelegate: MobileWorkflowSceneDelegate {
+class SceneDelegate: MWSceneDelegate {
     
     override func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         

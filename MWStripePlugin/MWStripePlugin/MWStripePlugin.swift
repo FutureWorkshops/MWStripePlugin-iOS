@@ -7,13 +7,13 @@
 
 import MobileWorkflowCore
 
-public struct MWStripePlugin: MobileWorkflowPlugin {
-    public static var allStepsTypes: [MobileWorkflowStepType] {
+public struct MWStripePlugin: Plugin {
+    public static var allStepsTypes: [StepType] {
         return MWStripeStepType.allCases
     }
 }
 
-public enum MWStripeStepType: String, MobileWorkflowStepType, CaseIterable {
+public enum MWStripeStepType: String, StepType, CaseIterable {
     
     case basicCheckout = "com.stripe.StripeBasicCheckout"
     
@@ -21,7 +21,7 @@ public enum MWStripeStepType: String, MobileWorkflowStepType, CaseIterable {
         return self.rawValue
     }
     
-    public var stepClass: MobileWorkflowStep.Type {
+    public var stepClass: BuildableStep.Type {
         switch self {
         case .basicCheckout: return MWStripeStep.self
         }
