@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name                  = 'MWStripePlugin'
-    s.version               = '0.0.5'
+    s.version               = '0.0.6'
     s.summary               = 'Stripe plugin for MobileWorkflow on iOS.'
     s.description           = <<-DESC
     Stripe plugin for MobileWorkflow on iOS, containg Stripe related steps:
