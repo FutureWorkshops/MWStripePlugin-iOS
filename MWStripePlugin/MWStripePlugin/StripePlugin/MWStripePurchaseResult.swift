@@ -8,29 +8,14 @@
 import Foundation
 import MobileWorkflowCore
 
-private let kSuccess = "success"
-
-final class MWStripePurchaseResult: ORKResult, Codable {
+final class MWStripePurchaseResult: StepResult, Codable {
     
+    var identifier: String
     let success: Bool
     
     init(identifier: String, success: Bool) {
+        self.identifier = identifier
         self.success = success
-        super.init(identifier: identifier)
-    }
-    
-    override func copy() -> Any {
-        return MWStripePurchaseResult(identifier: self.identifier, success: self.success)
-    }
-    
-    required init?(coder: NSCoder) {
-        self.success = coder.decodeBool(forKey: kSuccess)
-        super.init(coder: coder)
-    }
-    
-    override func encode(with coder: NSCoder) {
-        coder.encode(self.success, forKey: kSuccess)
-        super.encode(with: coder)
     }
 }
 
@@ -44,12 +29,12 @@ extension MWStripePurchaseResult: JSONRepresentable {
 
 extension MWStripePurchaseResult: ValueProvider {
     
-    var content: [AnyHashable : Codable] {
-        return [self.identifier: [kSuccess: success]]
+    var content: [AnyHashable: Codable] {
+        return [self.identifier: [CodingKeys.success.stringValue: success]]
     }
     
     func fetchValue(for path: String) -> Any? {
-        if path == kSuccess {
+        if path == CodingKeys.success.stringValue {
             return self.success
         } else {
             return nil
@@ -57,7 +42,7 @@ extension MWStripePurchaseResult: ValueProvider {
     }
     
     func fetchProvider(for path: String) -> ValueProvider? {
-        if path == kSuccess {
+        if path == CodingKeys.success.stringValue {
             return self.success as? ValueProvider
         } else {
             return nil
