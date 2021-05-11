@@ -37,7 +37,7 @@ public class MWStripeStep: MWStep, InstructionStep {
     }
     
     public override func instantiateViewController() -> StepViewController {
-        MWStripeViewController(step: self)
+        MWStripeViewController(instructionStep: self)
     }
 }
 
