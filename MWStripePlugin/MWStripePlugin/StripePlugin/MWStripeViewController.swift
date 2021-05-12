@@ -8,10 +8,10 @@
 import Foundation
 import MobileWorkflowCore
 
-public class MWStripeViewController: ORKInstructionStepViewController {
+public class MWStripeViewController: MWInstructionStepViewController {
     
     //MARK: private properties
-    private var stripeStep: MWStripeStep { self.step as! MWStripeStep }
+    private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
     private var stripeAPIClient: MWStripeAPIClient! // Force-unwrapped because we need access to self
     private var hasAskedForPaymentOptionsAlready = false
     
@@ -22,10 +22,7 @@ public class MWStripeViewController: ORKInstructionStepViewController {
         self.stripeAPIClient.delegate = self
         self.stripeAPIClient.paymentContextHostViewController = self
         
-        // Hijack the default target/action and call the method that we need
-        self.continueButtonTitle = "Loading Payment Options..."
-        self.continueButtonItem?.target = self
-        self.continueButtonItem?.action = #selector(self.requestPayment)
+        self.updateButtonTitle(buttonTitle: L10n.Stripe.loadingButtonTitle)
     }
     
     public override func viewDidAppear(_ animated: Bool) {
@@ -39,16 +36,25 @@ public class MWStripeViewController: ORKInstructionStepViewController {
         self.hasAskedForPaymentOptionsAlready = true
     }
     
+    private func updateButtonTitle(buttonTitle: String) {
+        self.configureWithTitle(
+            self.mwStep.title ?? "",
+            body: self.mwStep.text ?? "",
+            buttonTitle: buttonTitle) { [weak self] in
+            self?.requestPayment()
+        }
+    }
+    
     @objc private func requestPayment() {
-        self.continueButtonTitle = "Hold on..."
+        self.updateButtonTitle(buttonTitle: L10n.Stripe.payingButtonTitle)
         self.stripeAPIClient.requestPayment()
     }
 }
 
 extension MWStripeViewController: MWStripeAPIClientDelegate {
     public func paymentContextDidFailToLoad(withError error: Error) {
-        let alertController = UIAlertController(title: "Failed to load", message: error.localizedDescription, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default) { [weak self] _ in
+        let alertController = UIAlertController(title: L10n.Stripe.loadingError, message: error.localizedDescription, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: L10n.Stripe.dismissButtonTitle, style: .default) { [weak self] _ in
             if self?.navigationController?.viewControllers.first === self {
                 self?.dismiss(animated: true)
             } else {
@@ -60,18 +66,14 @@ extension MWStripeViewController: MWStripeAPIClientDelegate {
     
     public func paymentContextDidChange(isLoading: Bool, selectedPaymentOptionLabel: String?) {
         if let selectedPaymentOption = selectedPaymentOptionLabel {
-            self.continueButtonTitle = "Pay with \(selectedPaymentOption)"
+            self.updateButtonTitle(buttonTitle: L10n.Stripe.payWithOption(selectedPaymentOption))
         }
     }
     
     public func paymentContextDidFinishWith(result: PaymentContextResult) {
         switch result {
         case .userCancelled:
-            if self.navigationController?.viewControllers.first === self {
-                self.dismiss(animated: true)
-            } else {
-                self.goBackward()
-            }
+            self.goBackward()
         case .success, .error:
             let success: Bool
             switch result {
@@ -79,7 +81,7 @@ extension MWStripeViewController: MWStripeAPIClientDelegate {
             default: success = false
             }
             let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: success)
-            self.addResult(purchaseResult)
+            self.addStepResult(purchaseResult)
             self.goForward()
         }
     }

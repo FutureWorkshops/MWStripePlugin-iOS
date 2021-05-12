@@ -27,3 +27,15 @@ public enum MWStripeStepType: String, StepType, CaseIterable {
         }
     }
 }
+
+enum L10n {
+    enum Stripe {
+        static let loadingButtonTitle = "Loading Payment Options..."
+        static let payingButtonTitle = "Hold on..."
+        static let loadingError = "Failed to load"
+        static let dismissButtonTitle = "Failed to load"
+        static func payWithOption(_ option: String) -> String {
+            "Pay with \(option)"
+        }
+    }
+}

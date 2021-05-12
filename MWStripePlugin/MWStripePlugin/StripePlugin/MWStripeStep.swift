@@ -8,22 +8,27 @@
 import Foundation
 import MobileWorkflowCore
 
-public class MWStripeStep: ORKInstructionStep {
+public class MWStripeStep: MWStep, InstructionStep {
+    
+    public var imageURL: String?
+    public var image: UIImage?
+    public let session: Session
+    public let services: StepServices
     
     let publishableKey: String
     let ephemeralKeyUrl: String
     let paymentIntentUrl: String
     let customerID: String?
     let productID: String
-    let session: Session
     
-    init(identifier: String, publishableKey: String, ephemeralKeyUrl: String, paymentIntentUrl: String, customerID: String?, productID: String, session: Session) {
+    init(identifier: String, publishableKey: String, ephemeralKeyUrl: String, paymentIntentUrl: String, customerID: String?, productID: String, session: Session, services: StepServices) {
         self.publishableKey = publishableKey
         self.ephemeralKeyUrl = ephemeralKeyUrl
         self.paymentIntentUrl = paymentIntentUrl
         self.customerID = customerID
         self.productID = productID
         self.session = session
+        self.services = services
         super.init(identifier: identifier)
     }
     
@@ -31,8 +36,8 @@ public class MWStripeStep: ORKInstructionStep {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public override func stepViewControllerClass() -> AnyClass {
-        return MWStripeViewController.self
+    public override func instantiateViewController() -> StepViewController {
+        MWStripeViewController(instructionStep: self)
     }
 }
 
@@ -57,12 +62,13 @@ extension MWStripeStep: BuildableStep {
                                 paymentIntentUrl: paymentIntentUrl,
                                 customerID: stepInfo.data.content["customerId"] as? String, // optional
                                 productID: productID,
-                                session: stepInfo.session)
+                                session: stepInfo.session,
+                                services: services)
         theStep.text = stepInfo.data.content["text"] as? String
         if let image = stepInfo.data.image {
             theStep.image = image
         } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
-            theStep.image = services.imageLoadingService.syncLoad(image: urlString, session: stepInfo.session)
+            theStep.imageURL = urlString
         }
         return theStep
     }
