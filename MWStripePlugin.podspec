@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 	s.default_subspecs      = 'Core'
 	
     s.subspec 'Core' do |cs|
-	    cs.dependency            'MobileWorkflow'
+        cs.dependency            'MobileWorkflow', '~> 1.0.0'
         cs.dependency            'Stripe'
         cs.source_files          = 'MWStripePlugin/MWStripePlugin/**/*.swift'
     end
