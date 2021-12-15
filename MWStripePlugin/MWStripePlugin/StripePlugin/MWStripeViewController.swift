@@ -9,6 +9,12 @@ import Stripe
 import Foundation
 import MobileWorkflowCore
 
+struct StripeConfigurationResponse: Decodable {
+    let paymentIntent: String
+    let ephemeralKey: String
+    let customer: String
+    let publishableKey: String
+}
 
 public class MWStripeViewController: MWInstructionStepViewController {
     
@@ -29,35 +35,34 @@ public class MWStripeViewController: MWInstructionStepViewController {
             return
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
-            guard let data = data,
-                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
-                  let customerId = json["customer"] as? String,
-                  let customerEphemeralKeySecret = json["ephemeralKey"] as? String,
-                  let paymentIntentClientSecret = json["paymentIntent"] as? String,
-                  let publishableKey = json["publishableKey"] as? String,
-                  let self = self else {
-                      // Handle error
-                      return
-                  }
-            
-            STPAPIClient.shared.publishableKey = publishableKey
-            // MARK: Create a PaymentSheet instance
-            var configuration = PaymentSheet.Configuration()
-            configuration.merchantDisplayName = "Example, Inc."
-            configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
-            // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-            // methods that complete payment after a delay, like SEPA Debit and Sofort.
-            configuration.allowsDelayedPaymentMethods = false
-            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
-            
-            DispatchQueue.main.async {
-                self.checkoutButton.isEnabled = true
+        let task = URLAsyncTask<StripeConfigurationResponse>.build(
+            url: url,
+            method: .GET,
+            session: stripeStep.session,
+            parser: { try StripeConfigurationResponse.parse(data: $0) }
+        )
+        
+        self.stripeStep.services.perform(task: task, session: stripeStep.session) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                STPAPIClient.shared.publishableKey = response.publishableKey
+                // MARK: Create a PaymentSheet instance
+                var configuration = PaymentSheet.Configuration()
+                configuration.merchantDisplayName = "Example, Inc."
+                configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+                // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+                // methods that complete payment after a delay, like SEPA Debit and Sofort.
+                configuration.allowsDelayedPaymentMethods = false
+                self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
+                
+                DispatchQueue.main.async {
+                    self.checkoutButton.isEnabled = true
+                }
+            case .failure(let error):
+                self.show(error)
             }
-        })
-        task.resume()
+        }
     }
     
     @objc
