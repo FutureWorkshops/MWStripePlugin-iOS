@@ -26,8 +26,14 @@ public class MWStripeViewController: MWInstructionStepViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        checkoutButton.setTitle("Pay with Stripe", for: .normal)
         checkoutButton.addTarget(self, action: #selector(didTapCheckoutButton), for: .primaryActionTriggered)
         checkoutButton.isEnabled = false
+        self.view.addSubview(checkoutButton)
+        NSLayoutConstraint.activate([
+            checkoutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            checkoutButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        ])
         
         // MARK: Fetch the PaymentIntent client secret, Ephemeral Key secret, Customer ID, and publishable key
         guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
