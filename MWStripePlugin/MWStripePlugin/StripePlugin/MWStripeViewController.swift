@@ -5,84 +5,74 @@
 //  Created by Xavi Moll on 14/1/21.
 //
 
+import Stripe
 import Foundation
 import MobileWorkflowCore
+
 
 public class MWStripeViewController: MWInstructionStepViewController {
     
     //MARK: private properties
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
-    private var stripeAPIClient: MWStripeAPIClient! // Force-unwrapped because we need access to self
-    private var hasAskedForPaymentOptionsAlready = false
+    private let checkoutButton = UIButton(type: .system)
+    var paymentSheet: PaymentSheet?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.stripeAPIClient = MWStripeAPIClient(step: self.stripeStep, session: self.stripeStep.session)
-        self.stripeAPIClient.delegate = self
-        self.stripeAPIClient.paymentContextHostViewController = self
+        checkoutButton.addTarget(self, action: #selector(didTapCheckoutButton), for: .primaryActionTriggered)
+        checkoutButton.isEnabled = false
         
-        self.updateButtonTitle(buttonTitle: L10n.Stripe.loadingButtonTitle)
-    }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        // Ask only once
-        guard !hasAskedForPaymentOptionsAlready else { return }
-        // Automatically trigger the payment options
-        // warning: This can't be called on viewDidLoad or viewWillAppear because the UIViewController doesn't have
-        // a `.window` yet and the Stripe SDK asserts on that
-        self.stripeAPIClient.presentPaymentOptionsViewController()
-        self.hasAskedForPaymentOptionsAlready = true
-    }
-    
-    private func updateButtonTitle(buttonTitle: String) {
-        self.configureWithTitle(
-            self.mwStep.title ?? "",
-            body: self.mwStep.text ?? "",
-            buttonTitle: buttonTitle) { [weak self] in
-            self?.requestPayment()
+        // MARK: Fetch the PaymentIntent client secret, Ephemeral Key secret, Customer ID, and publishable key
+        guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
+            assertionFailure("Failed to resolve the URL")
+            return
         }
-    }
-    
-    @objc private func requestPayment() {
-        self.updateButtonTitle(buttonTitle: L10n.Stripe.payingButtonTitle)
-        self.stripeAPIClient.requestPayment()
-    }
-}
-
-extension MWStripeViewController: MWStripeAPIClientDelegate {
-    public func paymentContextDidFailToLoad(withError error: Error) {
-        let alertController = UIAlertController(title: L10n.Stripe.loadingError, message: error.localizedDescription, preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: L10n.Stripe.dismissButtonTitle, style: .default) { [weak self] _ in
-            if self?.navigationController?.viewControllers.first === self {
-                self?.dismiss(animated: true)
-            } else {
-                self?.goBackward()
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let task = URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+            guard let data = data,
+                  let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String : Any],
+                  let customerId = json["customer"] as? String,
+                  let customerEphemeralKeySecret = json["ephemeralKey"] as? String,
+                  let paymentIntentClientSecret = json["paymentIntent"] as? String,
+                  let publishableKey = json["publishableKey"] as? String,
+                  let self = self else {
+                      // Handle error
+                      return
+                  }
+            
+            STPAPIClient.shared.publishableKey = publishableKey
+            // MARK: Create a PaymentSheet instance
+            var configuration = PaymentSheet.Configuration()
+            configuration.merchantDisplayName = "Example, Inc."
+            configuration.customer = .init(id: customerId, ephemeralKeySecret: customerEphemeralKeySecret)
+            // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
+            // methods that complete payment after a delay, like SEPA Debit and Sofort.
+            configuration.allowsDelayedPaymentMethods = false
+            self.paymentSheet = PaymentSheet(paymentIntentClientSecret: paymentIntentClientSecret, configuration: configuration)
+            
+            DispatchQueue.main.async {
+                self.checkoutButton.isEnabled = true
             }
         })
-        self.present(alertController, animated: true)
+        task.resume()
     }
     
-    public func paymentContextDidChange(isLoading: Bool, selectedPaymentOptionLabel: String?) {
-        if let selectedPaymentOption = selectedPaymentOptionLabel {
-            self.updateButtonTitle(buttonTitle: L10n.Stripe.payWithOption(selectedPaymentOption))
+    @objc
+    private func didTapCheckoutButton() {
+      // MARK: Start the checkout process
+      paymentSheet?.present(from: self) { paymentResult in
+        // MARK: Handle the payment result
+        switch paymentResult {
+        case .completed:
+          print("Your order is confirmed")
+        case .canceled:
+          print("Canceled!")
+        case .failed(let error):
+          print("Payment failed: \(error)")
         }
-    }
-    
-    public func paymentContextDidFinishWith(result: PaymentContextResult) {
-        switch result {
-        case .userCancelled:
-            self.goBackward()
-        case .success, .error:
-            let success: Bool
-            switch result {
-            case .success: success = true
-            default: success = false
-            }
-            let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: success)
-            self.addStepResult(purchaseResult)
-            self.goForward()
-        }
+      }
     }
 }

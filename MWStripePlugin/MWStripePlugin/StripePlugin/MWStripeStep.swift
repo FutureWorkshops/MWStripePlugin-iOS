@@ -10,25 +10,16 @@ import MobileWorkflowCore
 
 public class MWStripeStep: MWStep, InstructionStep {
     
-    public var imageURL: String?
-    public var image: UIImage?
     public let session: Session
     public let services: StepServices
+    public var imageURL: String? = nil //FIXME: Add it later on depending on the UI that we need
+    public var image: UIImage? = nil //FIXME: Add it later on depending on the UI that we need
+    public let configurationURLString: String
     
-    let publishableKey: String
-    let ephemeralKeyUrl: String
-    let paymentIntentUrl: String
-    let customerID: String?
-    let productID: String
-    
-    init(identifier: String, publishableKey: String, ephemeralKeyUrl: String, paymentIntentUrl: String, customerID: String?, productID: String, session: Session, services: StepServices) {
-        self.publishableKey = publishableKey
-        self.ephemeralKeyUrl = ephemeralKeyUrl
-        self.paymentIntentUrl = paymentIntentUrl
-        self.customerID = customerID
-        self.productID = productID
+    init(identifier: String, session: Session, services: StepServices, configurationURLString: String) {
         self.session = session
         self.services = services
+        self.configurationURLString = configurationURLString
         super.init(identifier: identifier)
     }
     
@@ -43,33 +34,13 @@ public class MWStripeStep: MWStep, InstructionStep {
 
 extension MWStripeStep: BuildableStep {
     public static func build(stepInfo: StepInfo, services: StepServices) throws -> Step {
-        guard let publishableKey = stepInfo.data.content["publishableKey"] as? String else {
-            throw ParseError.invalidStepData(cause: "Missing required field: publishableKey")
-        }
-        guard let ephemeralKeyUrl = stepInfo.data.content["ephemeralKeyURL"] as? String else {
-            throw ParseError.invalidStepData(cause: "Missing required field: ephemeralKeyURL")
-        }
-        guard let paymentIntentUrl = stepInfo.data.content["paymentIntentURL"] as? String else {
-            throw ParseError.invalidStepData(cause: "Missing required field: paymentIntentUrl")
-        }
-        guard let productID = stepInfo.data.content["productId"] as? String else {
-            throw ParseError.invalidStepData(cause: "Missing required field: productId")
+        guard let configurationURLString = stepInfo.data.content["payment_intent_url"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing configuration URL")
         }
         
-        let theStep = MWStripeStep(identifier: stepInfo.data.identifier,
-                                publishableKey: publishableKey,
-                                ephemeralKeyUrl: ephemeralKeyUrl,
-                                paymentIntentUrl: paymentIntentUrl,
-                                customerID: stepInfo.data.content["customerId"] as? String, // optional
-                                productID: productID,
-                                session: stepInfo.session,
-                                services: services)
-        theStep.text = stepInfo.data.content["text"] as? String
-        if let image = stepInfo.data.image {
-            theStep.image = image
-        } else if let urlString = stepInfo.data.imageURL ?? stepInfo.data.content["imageURL"] as? String {
-            theStep.imageURL = urlString
-        }
-        return theStep
+        let step = MWStripeStep(identifier: stepInfo.data.identifier, session: stepInfo.session, services: services, configurationURLString: configurationURLString)
+        step.text = stepInfo.data.content["text"] as? String
+        
+        return step
     }
 }
