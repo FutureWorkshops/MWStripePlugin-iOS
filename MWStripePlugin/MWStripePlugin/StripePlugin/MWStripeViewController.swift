@@ -20,21 +20,21 @@ public class MWStripeViewController: MWInstructionStepViewController {
     
     //MARK: private properties
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
-    private let checkoutButton = UIButton(type: .system)
     var paymentSheet: PaymentSheet?
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        
-        checkoutButton.setTitle("Pay with Stripe", for: .normal)
-        checkoutButton.addTarget(self, action: #selector(didTapCheckoutButton), for: .primaryActionTriggered)
-        checkoutButton.isEnabled = false
-        self.view.addSubview(checkoutButton)
-        NSLayoutConstraint.activate([
-            checkoutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            checkoutButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
-        ])
-        
+        self.configureButton(title: "Loading...", isEnabled: false)
+        self.fetchStripeConfiguration()
+    }
+    
+    private func configureButton(title: String, isEnabled: Bool) {
+        self.navigationFooterConfig = NavigationFooterView.Config(primaryButton: ButtonConfig(isEnabled: isEnabled, style: .primary, title: title, action: didTapCheckoutButton),
+                                                                  secondaryButton: nil,
+                                                                  hasBlurredBackground: false)
+    }
+    
+    private func fetchStripeConfiguration() {
         // MARK: Fetch the PaymentIntent client secret, Ephemeral Key secret, Customer ID, and publishable key
         guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
             assertionFailure("Failed to resolve the URL")
@@ -53,17 +53,14 @@ public class MWStripeViewController: MWInstructionStepViewController {
             switch result {
             case .success(let response):
                 STPAPIClient.shared.publishableKey = response.publishableKey
-                // MARK: Create a PaymentSheet instance
+                
                 var configuration = PaymentSheet.Configuration()
                 configuration.merchantDisplayName = "Example, Inc."
                 configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
-                // Set `allowsDelayedPaymentMethods` to true if your business can handle payment
-                // methods that complete payment after a delay, like SEPA Debit and Sofort.
-                configuration.allowsDelayedPaymentMethods = false
                 self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
-                
+
                 DispatchQueue.main.async {
-                    self.checkoutButton.isEnabled = true
+                    self.configureButton(title: "Pay with Stripe", isEnabled: true)
                 }
             case .failure(let error):
                 self.show(error)
@@ -71,19 +68,16 @@ public class MWStripeViewController: MWInstructionStepViewController {
         }
     }
     
-    @objc
     private func didTapCheckoutButton() {
-      // MARK: Start the checkout process
-      paymentSheet?.present(from: self) { paymentResult in
-        // MARK: Handle the payment result
-        switch paymentResult {
-        case .completed:
-          print("Your order is confirmed")
-        case .canceled:
-          print("Canceled!")
-        case .failed(let error):
-          print("Payment failed: \(error)")
+        paymentSheet?.present(from: self) { paymentResult in
+            switch paymentResult {
+            case .completed:
+                print("Your order is confirmed")
+            case .canceled:
+                print("Canceled!")
+            case .failed(let error):
+                print("Payment failed: \(error)")
+            }
         }
-      }
     }
 }
