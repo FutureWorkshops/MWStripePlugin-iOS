@@ -70,11 +70,11 @@ public class MWStripeViewController: MWInstructionStepViewController {
         paymentSheet?.present(from: self) { paymentResult in
             switch paymentResult {
             case .completed:
-                print("Your order is confirmed")
+                let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: true)
+                self.addStepResult(purchaseResult)
+                self.goForward()
             case .canceled:
-                let alertController = UIAlertController(title: "Cancelled", message: "Payment cancelled.", preferredStyle: .alert)
-                alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
-                self.present(alertController, animated: true)
+                self.goBackward()
             case .failed(let error):
                 self.show(error)
             }
