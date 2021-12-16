@@ -16,6 +16,11 @@ struct StripeConfigurationResponse: Decodable {
     let publishableKey: String
 }
 
+struct StripeConfirmationResponse: Decodable {
+    let status: String
+    let paymentIntent: String
+}
+
 public class MWStripeViewController: MWInstructionStepViewController {
     
     //MARK: private properties
@@ -70,12 +75,47 @@ public class MWStripeViewController: MWInstructionStepViewController {
         paymentSheet?.present(from: self) { paymentResult in
             switch paymentResult {
             case .completed:
-                let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: true)
-                self.addStepResult(purchaseResult)
-                self.goForward()
+                self.confirmPurchase()
             case .canceled:
                 self.goBackward()
             case .failed(let error):
+                self.show(error)
+            }
+        }
+    }
+    
+    private func confirmPurchase() {
+        
+        guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
+            assertionFailure("Failed to resolve the URL")
+            return
+        }
+        
+        let task = URLAsyncTask<StripeConfigurationResponse>.build(
+            url: url,
+            method: .PUT,
+            session: stripeStep.session,
+            parser: { try StripeConfirmationResponse.parse(data: $0) }
+        )
+        
+        self.stripeStep.services.perform(task: task, session: stripeStep.session) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let response):
+                DispatchQueue.main.async {
+                    switch response.status {
+                    case "success":
+                        let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: true)
+                        self.addStepResult(purchaseResult)
+                        self.goForward()
+                    case "cancelled":
+                        self.goBackward()
+                    default:
+                        let error = NSError(domain: "stripe", code: 0, userInfo: [NSLocalizedDescriptionKey:"Unable to verify the payment."])
+                        self.show(error)
+                    }
+                }
+            case .failure(let error):
                 self.show(error)
             }
         }
