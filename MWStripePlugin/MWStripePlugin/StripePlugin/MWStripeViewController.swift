@@ -17,8 +17,8 @@ struct StripeConfigurationResponse: Decodable {
 }
 
 struct StripeConfirmationResponse: Decodable {
-    let status: String
-    let paymentIntent: String
+    let paymentSuccessful: Bool
+    let paymentStatusMessage: String?
 }
 
 public class MWStripeViewController: MWInstructionStepViewController {
@@ -54,69 +54,64 @@ public class MWStripeViewController: MWInstructionStepViewController {
         
         self.stripeStep.services.perform(task: task, session: stripeStep.session) { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                STPAPIClient.shared.publishableKey = response.publishableKey
-                
-                var configuration = PaymentSheet.Configuration()
-                configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
-                self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    STPAPIClient.shared.publishableKey = response.publishableKey
+                    
+                    var configuration = PaymentSheet.Configuration()
+                    configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+                    self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
 
-                DispatchQueue.main.async {
                     self.configureButton(title: "Pay with Stripe", isEnabled: true)
+                case .failure(let error):
+                    self.show(error)
                 }
-            case .failure(let error):
-                self.show(error)
             }
         }
     }
     
     private func didTapCheckoutButton() {
         paymentSheet?.present(from: self) { paymentResult in
+            let status: String
             switch paymentResult {
             case .completed:
-                self.confirmPurchase()
+                status = "succeeded"
             case .canceled:
-                self.goBackward()
+                status = "cancelled"
             case .failed(let error):
-                self.show(error)
+                status = "failed"
             }
+            self.validateStripeStatus(status: status)
         }
     }
     
-    private func confirmPurchase() {
-        
+    // Validate against the server what the SDK has returned
+    private func validateStripeStatus(status: String) {
         guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
             assertionFailure("Failed to resolve the URL")
             return
         }
         
-        let task = URLAsyncTask<StripeConfigurationResponse>.build(
+        let task = URLAsyncTask<StripeConfirmationResponse>.build(
             url: url,
             method: .PUT,
+            body: try? JSONSerialization.data(withJSONObject: ["status":status], options: []),
             session: stripeStep.session,
             parser: { try StripeConfirmationResponse.parse(data: $0) }
         )
         
         self.stripeStep.services.perform(task: task, session: stripeStep.session) { [weak self] result in
             guard let self = self else { return }
-            switch result {
-            case .success(let response):
-                DispatchQueue.main.async {
-                    switch response.status {
-                    case "success":
-                        let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: true)
-                        self.addStepResult(purchaseResult)
-                        self.goForward()
-                    case "cancelled":
-                        self.goBackward()
-                    default:
-                        let error = NSError(domain: "stripe", code: 0, userInfo: [NSLocalizedDescriptionKey:"Unable to verify the payment."])
-                        self.show(error)
-                    }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: response.paymentSuccessful)
+                    self.addStepResult(purchaseResult)
+                    self.goForward()
+                case .failure(let error):
+                    self.show(error)
                 }
-            case .failure(let error):
-                self.show(error)
             }
         }
     }
