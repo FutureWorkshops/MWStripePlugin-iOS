@@ -43,7 +43,7 @@ public class MWStripeViewController: MWInstructionStepViewController {
         
         let task = URLAsyncTask<StripeConfigurationResponse>.build(
             url: url,
-            method: .GET,
+            method: .POST,
             session: stripeStep.session,
             parser: { try StripeConfigurationResponse.parse(data: $0) }
         )
