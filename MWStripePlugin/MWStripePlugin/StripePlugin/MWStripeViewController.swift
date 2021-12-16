@@ -55,7 +55,6 @@ public class MWStripeViewController: MWInstructionStepViewController {
                 STPAPIClient.shared.publishableKey = response.publishableKey
                 
                 var configuration = PaymentSheet.Configuration()
-                configuration.merchantDisplayName = "Example, Inc."
                 configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
                 self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
 
