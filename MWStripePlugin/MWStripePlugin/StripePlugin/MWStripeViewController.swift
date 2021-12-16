@@ -35,7 +35,6 @@ public class MWStripeViewController: MWInstructionStepViewController {
     }
     
     private func fetchStripeConfiguration() {
-        // MARK: Fetch the PaymentIntent client secret, Ephemeral Key secret, Customer ID, and publishable key
         guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
             assertionFailure("Failed to resolve the URL")
             return
@@ -73,9 +72,11 @@ public class MWStripeViewController: MWInstructionStepViewController {
             case .completed:
                 print("Your order is confirmed")
             case .canceled:
-                print("Canceled!")
+                let alertController = UIAlertController(title: "Cancelled", message: "Payment cancelled.", preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Dismiss", style: .cancel))
+                self.present(alertController, animated: true)
             case .failed(let error):
-                print("Payment failed: \(error)")
+                self.show(error)
             }
         }
     }
