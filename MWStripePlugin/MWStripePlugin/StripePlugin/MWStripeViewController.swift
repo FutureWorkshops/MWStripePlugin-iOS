@@ -98,6 +98,7 @@ public class MWStripeViewController: MWInstructionStepViewController {
             method: .PUT,
             body: try? JSONSerialization.data(withJSONObject: ["status":status], options: []),
             session: stripeStep.session,
+            headers: ["Content-Type":"application/json"],
             parser: { try StripeConfirmationResponse.parse(data: $0) }
         )
         
