@@ -43,6 +43,8 @@ public class MWStripeViewController: MWStepViewController {
         tableView.dataSource = self
         self.view.addPinnedSubview(tableView)
         
+        self.loadItemsToPurchase()
+        
         self.configureButton(title: "Loading...", isEnabled: false)
         self.fetchStripeConfiguration()
     }
@@ -66,6 +68,33 @@ public class MWStripeViewController: MWStepViewController {
                 status = "failed"
             }
             self.validateStripeStatus(status: status)
+        }
+    }
+    
+    private func loadItemsToPurchase() {
+        guard let url = self.stripeStep.session.resolve(url: stripeStep.contentURL) else {
+            assertionFailure("Failed to resolve the URL")
+            return
+        }
+        
+        let task = URLAsyncTask<[PurchaseableItem]>.build(
+            url: url,
+            method: .GET,
+            session: stripeStep.session,
+            parser: { try JSONDecoder().decode([PurchaseableItem].self, from: $0) }
+        )
+        
+        self.stripeStep.services.perform(task: task, session: stripeStep.session) { [weak self] result in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let response):
+                    self.purchaseableItems = response
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    self.show(error)
+                }
+            }
         }
     }
 }
@@ -103,7 +132,7 @@ extension MWStripeViewController {
     
     // Load the configuration when tapping the payment button
     private func fetchStripeConfiguration() {
-        guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
+        guard let url = self.stripeStep.session.resolve(url: stripeStep.paymentIntentURL) else {
             assertionFailure("Failed to resolve the URL")
             return
         }
@@ -136,7 +165,7 @@ extension MWStripeViewController {
     
     // Validate against the server what the SDK has returned
     private func validateStripeStatus(status: String) {
-        guard let url = self.stripeStep.session.resolve(url: stripeStep.configurationURLString) else {
+        guard let url = self.stripeStep.session.resolve(url: stripeStep.paymentIntentURL) else {
             assertionFailure("Failed to resolve the URL")
             return
         }

@@ -12,12 +12,14 @@ public class MWStripeStep: MWStep {
     
     public let session: Session
     public let services: StepServices
-    public let configurationURLString: String
+    public let contentURL: String
+    public let paymentIntentURL: String
     
-    init(identifier: String, session: Session, services: StepServices, configurationURLString: String) {
+    init(identifier: String, session: Session, services: StepServices, contentURL: String, paymentIntentURL: String) {
         self.session = session
         self.services = services
-        self.configurationURLString = configurationURLString
+        self.contentURL = contentURL
+        self.paymentIntentURL = paymentIntentURL
         super.init(identifier: identifier)
     }
     
@@ -32,11 +34,15 @@ public class MWStripeStep: MWStep {
 
 extension MWStripeStep: BuildableStep {
     public static func build(stepInfo: StepInfo, services: StepServices) throws -> Step {
-        guard let configurationURLString = stepInfo.data.content["payment_intent_url"] as? String else {
-            throw ParseError.invalidStepData(cause: "Missing configuration URL")
+        guard let contentURL = stepInfo.data.content["url"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing content URL")
         }
         
-        let step = MWStripeStep(identifier: stepInfo.data.identifier, session: stepInfo.session, services: services, configurationURLString: configurationURLString)
+        guard let paymentIntentURL = stepInfo.data.content["payment_intent_url"] as? String else {
+            throw ParseError.invalidStepData(cause: "Missing payment intent URL")
+        }
+        
+        let step = MWStripeStep(identifier: stepInfo.data.identifier, session: stepInfo.session, services: services, contentURL: contentURL, paymentIntentURL: paymentIntentURL)
         step.text = stepInfo.data.content["text"] as? String
         
         return step
