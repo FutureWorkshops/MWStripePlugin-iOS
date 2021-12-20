@@ -46,7 +46,10 @@ public class MWStripeViewController: MWStepViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-        self.view.addPinnedSubview(tableView)
+        
+        let VStack = UIStackView(arrangedSubviews: [tableView, navigationFooterView])
+        VStack.axis = .vertical
+        self.view.addPinnedSubview(VStack)
         
         self.loadItemsToPurchase()
         
