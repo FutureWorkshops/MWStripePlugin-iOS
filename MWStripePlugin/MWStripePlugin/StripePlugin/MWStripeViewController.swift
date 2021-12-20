@@ -46,6 +46,7 @@ public class MWStripeViewController: MWStepViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        tableView.contentInset = .init(top: 16, left: 0, bottom: 0, right: 0)
         
         let VStack = UIStackView(arrangedSubviews: [tableView, navigationFooterView])
         VStack.axis = .vertical
