@@ -8,12 +8,10 @@
 import Foundation
 import MobileWorkflowCore
 
-public class MWStripeStep: MWStep, InstructionStep {
+public class MWStripeStep: MWStep {
     
     public let session: Session
     public let services: StepServices
-    public var imageURL: String? = nil //FIXME: Add it later on depending on the UI that we need
-    public var image: UIImage? = nil //FIXME: Add it later on depending on the UI that we need
     public let configurationURLString: String
     
     init(identifier: String, session: Session, services: StepServices, configurationURLString: String) {
@@ -28,7 +26,7 @@ public class MWStripeStep: MWStep, InstructionStep {
     }
     
     public override func instantiateViewController() -> StepViewController {
-        MWStripeViewController(instructionStep: self)
+        MWStripeViewController(step: self)
     }
 }
 
