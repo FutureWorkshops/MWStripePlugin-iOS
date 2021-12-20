@@ -32,7 +32,7 @@ struct StripeConfirmationResponse: Decodable {
 public class MWStripeViewController: MWStepViewController {
     
     //MARK: private properties
-    private let tableView = UITableView(frame: .zero, style: .plain)
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     private var ongoingImageLoads: [IndexPath: AnyCancellable] = [:]
     
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
