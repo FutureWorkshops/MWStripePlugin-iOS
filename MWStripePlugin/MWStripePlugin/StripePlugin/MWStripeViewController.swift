@@ -6,11 +6,12 @@
 //
 
 import Stripe
+import Combine
 import Foundation
 import MobileWorkflowCore
 
 struct PurchaseableItem: Decodable {
-    let imageURL: URL?
+    let imageURL: String?
     let text: String
     let detailText: String?
     let amount: String
@@ -32,8 +33,10 @@ public class MWStripeViewController: MWStepViewController {
     
     //MARK: private properties
     private let tableView = UITableView(frame: .zero, style: .plain)
+    private var ongoingImageLoads: [IndexPath: AnyCancellable] = [:]
+    
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
-    private var purchaseableItems: [PurchaseableItem] = [.init(imageURL: nil, text: "Title", detailText: "Subtitle", amount: "£25")]
+    private var purchaseableItems: [PurchaseableItem] = [.init(imageURL: "https://images.unsplash.com/photo-1557682224-5b8590cd9ec5?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=2000&fit=max&ixid=eyJhcHBfaWQiOjExNzczfQ", text: "This is a sample title", detailText: "This is a sample subtitle", amount: "£25")]
     private var paymentSheet: PaymentSheet?
     
     public override func viewDidLoad() {
@@ -41,6 +44,8 @@ public class MWStripeViewController: MWStepViewController {
         
         tableView.tableFooterView = UIView()
         tableView.dataSource = self
+        tableView.delegate = self
+        tableView.separatorStyle = .none
         self.view.addPinnedSubview(tableView)
         
         self.loadItemsToPurchase()
@@ -99,7 +104,7 @@ public class MWStripeViewController: MWStepViewController {
     }
 }
 
-extension MWStripeViewController: UITableViewDataSource {
+extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.purchaseableItems.count
@@ -109,12 +114,25 @@ extension MWStripeViewController: UITableViewDataSource {
         let item = self.purchaseableItems[indexPath.row]
         let cell = tableView.cellForRow(at: indexPath) ?? UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
         
-        //TODO: Include the image
+        if let imageURL = item.imageURL {
+            let cancellable = self.stripeStep.services.imageLoadingService.asyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image in
+                cell.imageView?.image = image?.resized(to: CGSize(width: 57, height: 57), preservingAspectRatio: true)
+                cell.imageView?.frame = CGRect(x: 0, y: 0, width: 57, height: 57)
+                cell.imageView?.contentMode = .scaleAspectFit
+                cell.imageView?.layer.cornerRadius = 4
+                cell.imageView?.layer.masksToBounds = true
+                cell.setNeedsLayout()
+                self?.ongoingImageLoads.removeValue(forKey: indexPath)
+            }
+            self.ongoingImageLoads[indexPath] = cancellable
+        }
         
         cell.textLabel?.text = item.text
+        cell.textLabel?.numberOfLines = 0
         cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         
         cell.detailTextLabel?.text = item.detailText
+        cell.detailTextLabel?.numberOfLines = 0
         cell.detailTextLabel?.textColor = .secondaryLabel
         
         let amountLabel = UILabel()
@@ -124,6 +142,13 @@ extension MWStripeViewController: UITableViewDataSource {
         cell.accessoryView = amountLabel
         
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let imageLoad = self.ongoingImageLoads[indexPath] {
+            imageLoad.cancel()
+            self.ongoingImageLoads.removeValue(forKey: indexPath)
+        }
     }
 }
 
