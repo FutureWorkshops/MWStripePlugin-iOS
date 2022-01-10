@@ -36,7 +36,7 @@ public class MWStripeViewController: MWStepViewController {
     private var ongoingImageLoads: [IndexPath: AnyCancellable] = [:]
     
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
-    private var purchaseableItems: [PurchaseableItem] = []
+    private var purchaseableItems: [PurchaseableItem] = [.init(imageURL: nil, text: "Loading...", detailText: nil, amount: "")]
     private var paymentSheet: PaymentSheet?
     
     public override func viewDidLoad() {
