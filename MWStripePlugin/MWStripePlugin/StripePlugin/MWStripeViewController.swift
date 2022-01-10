@@ -80,6 +80,7 @@ public class MWStripeViewController: MWStepViewController {
         }
     }
     
+    // MARK: Content
     private func loadItemsToPurchase() {
         guard let url = self.stripeStep.session.resolve(url: stripeStep.contentURL) else {
             assertionFailure("Failed to resolve the URL")
@@ -106,60 +107,8 @@ public class MWStripeViewController: MWStepViewController {
             }
         }
     }
-}
-
-extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
     
-    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.purchaseableItems.count
-    }
-    
-    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = self.purchaseableItems[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath) ?? UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
-        
-        if let imageURL = item.imageURL {
-            let cancellable = self.stripeStep.services.imageLoadingService.asyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image in
-                cell.imageView?.image = image?.resized(to: CGSize(width: 48, height: 48), preservingAspectRatio: true)
-                cell.imageView?.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
-                cell.imageView?.contentMode = .scaleAspectFit
-                cell.imageView?.layer.cornerRadius = 4
-                cell.imageView?.layer.masksToBounds = true
-                cell.setNeedsLayout()
-                self?.ongoingImageLoads.removeValue(forKey: indexPath)
-            }
-            self.ongoingImageLoads[indexPath] = cancellable
-        }
-        
-        cell.textLabel?.text = item.text
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        
-        cell.detailTextLabel?.text = item.detailText
-        cell.detailTextLabel?.numberOfLines = 0
-        cell.detailTextLabel?.textColor = .secondaryLabel
-        
-        let amountLabel = UILabel()
-        amountLabel.text = item.amount
-        amountLabel.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
-        amountLabel.sizeToFit()
-        cell.accessoryView = amountLabel
-        
-        return cell
-    }
-    
-    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let imageLoad = self.ongoingImageLoads[indexPath] {
-            imageLoad.cancel()
-            self.ongoingImageLoads.removeValue(forKey: indexPath)
-        }
-    }
-}
-
-//MARK: Stripe
-extension MWStripeViewController {
-    
-    // Load the configuration when tapping the payment button
+    //MARK: Stripe
     private func fetchStripeConfiguration() {
         guard let url = self.stripeStep.session.resolve(url: stripeStep.paymentIntentURL) else {
             assertionFailure("Failed to resolve the URL")
@@ -220,6 +169,54 @@ extension MWStripeViewController {
                     self.show(error)
                 }
             }
+        }
+    }
+}
+
+extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.purchaseableItems.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let item = self.purchaseableItems[indexPath.row]
+        let cell = tableView.cellForRow(at: indexPath) ?? UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
+        
+        if let imageURL = item.imageURL {
+            let cancellable = self.stripeStep.services.imageLoadingService.asyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image in
+                cell.imageView?.image = image?.resized(to: CGSize(width: 48, height: 48), preservingAspectRatio: true)
+                cell.imageView?.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
+                cell.imageView?.contentMode = .scaleAspectFit
+                cell.imageView?.layer.cornerRadius = 4
+                cell.imageView?.layer.masksToBounds = true
+                cell.setNeedsLayout()
+                self?.ongoingImageLoads.removeValue(forKey: indexPath)
+            }
+            self.ongoingImageLoads[indexPath] = cancellable
+        }
+        
+        cell.textLabel?.text = item.text
+        cell.textLabel?.numberOfLines = 0
+        cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        
+        cell.detailTextLabel?.text = item.detailText
+        cell.detailTextLabel?.numberOfLines = 0
+        cell.detailTextLabel?.textColor = .secondaryLabel
+        
+        let amountLabel = UILabel()
+        amountLabel.text = item.amount
+        amountLabel.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
+        amountLabel.sizeToFit()
+        cell.accessoryView = amountLabel
+        
+        return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let imageLoad = self.ongoingImageLoads[indexPath] {
+            imageLoad.cancel()
+            self.ongoingImageLoads.removeValue(forKey: indexPath)
         }
     }
 }
