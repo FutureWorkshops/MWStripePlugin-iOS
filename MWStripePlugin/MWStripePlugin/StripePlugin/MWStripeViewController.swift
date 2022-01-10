@@ -47,6 +47,7 @@ public class MWStripeViewController: MWStepViewController {
         tableView.delegate = self
         tableView.separatorStyle = .none
         tableView.contentInset = .init(top: 16, left: 0, bottom: 0, right: 0)
+        tableView.register(MWStripePurchaseCell.self, forCellReuseIdentifier: "reuseIdentifier")
         
         let VStack = UIStackView(arrangedSubviews: [tableView, navigationFooterView])
         VStack.axis = .vertical
@@ -181,34 +182,17 @@ extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = self.purchaseableItems[indexPath.row]
-        let cell = tableView.cellForRow(at: indexPath) ?? UITableViewCell(style: .subtitle, reuseIdentifier: "reuseIdentifier")
+        let cell: MWStripePurchaseCell = tableView.cellForRow(at: indexPath) as? MWStripePurchaseCell ?? MWStripePurchaseCell(style: .default, reuseIdentifier: "reuseIdentifier")
+        cell.configure(with: item)
         
         if let imageURL = item.imageURL {
             let cancellable = self.stripeStep.services.imageLoadingService.asyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image in
-                cell.imageView?.image = image?.resized(to: CGSize(width: 48, height: 48), preservingAspectRatio: true)
-                cell.imageView?.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
-                cell.imageView?.contentMode = .scaleAspectFit
-                cell.imageView?.layer.cornerRadius = 4
-                cell.imageView?.layer.masksToBounds = true
+                (cell.stackView.arrangedSubviews.first(where: { $0 is UIImageView }) as? UIImageView)?.image = image
                 cell.setNeedsLayout()
                 self?.ongoingImageLoads.removeValue(forKey: indexPath)
             }
             self.ongoingImageLoads[indexPath] = cancellable
         }
-        
-        cell.textLabel?.text = item.text
-        cell.textLabel?.numberOfLines = 0
-        cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        
-        cell.detailTextLabel?.text = item.detailText
-        cell.detailTextLabel?.numberOfLines = 0
-        cell.detailTextLabel?.textColor = .secondaryLabel
-        
-        let amountLabel = UILabel()
-        amountLabel.text = item.amount
-        amountLabel.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
-        amountLabel.sizeToFit()
-        cell.accessoryView = amountLabel
         
         return cell
     }
