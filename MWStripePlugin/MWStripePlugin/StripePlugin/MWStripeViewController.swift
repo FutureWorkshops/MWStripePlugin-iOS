@@ -120,8 +120,8 @@ extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
         
         if let imageURL = item.imageURL {
             let cancellable = self.stripeStep.services.imageLoadingService.asyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image in
-                cell.imageView?.image = image?.resized(to: CGSize(width: 57, height: 57), preservingAspectRatio: true)
-                cell.imageView?.frame = CGRect(x: 0, y: 0, width: 57, height: 57)
+                cell.imageView?.image = image?.resized(to: CGSize(width: 48, height: 48), preservingAspectRatio: true)
+                cell.imageView?.frame = CGRect(x: 0, y: 0, width: 48, height: 48)
                 cell.imageView?.contentMode = .scaleAspectFit
                 cell.imageView?.layer.cornerRadius = 4
                 cell.imageView?.layer.masksToBounds = true
