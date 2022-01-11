@@ -36,7 +36,7 @@ public class MWStripeViewController: MWStepViewController {
     private var ongoingImageLoads: [IndexPath: AnyCancellable] = [:]
     
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
-    private var purchaseableItems: [PurchaseableItem] = [.init(imageURL: nil, text: "Loading...", detailText: nil, amount: "")]
+    private var purchaseableItems: [PurchaseableItem] = [.init(imageURL: nil, text: L10n.loading, detailText: nil, amount: "")]
     private var paymentSheet: PaymentSheet?
     
     public override func viewDidLoad() {
@@ -55,7 +55,7 @@ public class MWStripeViewController: MWStepViewController {
         
         self.loadItemsToPurchase()
         
-        self.configureButton(title: "Loading...", isEnabled: false)
+        self.configureButton(title: L10n.loading, isEnabled: false)
         self.fetchStripeConfiguration()
     }
     
@@ -134,7 +134,7 @@ public class MWStripeViewController: MWStepViewController {
                     configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
                     self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
 
-                    self.configureButton(title: "Pay with Stripe", isEnabled: true)
+                    self.configureButton(title: L10n.payWithStripe, isEnabled: true)
                 case .failure(let error):
                     self.show(error)
                 }

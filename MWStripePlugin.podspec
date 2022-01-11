@@ -19,5 +19,6 @@ Pod::Spec.new do |s|
         cs.dependency            'MobileWorkflow', '~> 1.0.0'
         cs.dependency            'Stripe'
         cs.source_files          = 'MWStripePlugin/MWStripePlugin/**/*.swift'
+        cs.resources             = ['MWStripePlugin/MWStripePlugin/**/*.strings']
     end
 end
