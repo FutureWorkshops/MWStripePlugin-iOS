@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name                  = 'MWStripePlugin'
-    s.version               = '0.0.8'
+    s.version               = '0.0.9'
     s.summary               = 'Stripe plugin for MobileWorkflow on iOS.'
     s.description           = <<-DESC
     Stripe plugin for MobileWorkflow on iOS, containg Stripe related steps:
@@ -19,5 +19,6 @@ Pod::Spec.new do |s|
         cs.dependency            'MobileWorkflow', '~> 1.0.0'
         cs.dependency            'Stripe'
         cs.source_files          = 'MWStripePlugin/MWStripePlugin/**/*.swift'
+        cs.resources             = ['MWStripePlugin/MWStripePlugin/**/*.strings']
     end
 end
