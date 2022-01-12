@@ -11,11 +11,13 @@ import MobileWorkflowCore
 final class MWStripePurchaseResult: StepResult, Codable {
     
     var identifier: String
-    let success: Bool
+    let paymentSuccessful: Bool
+    let paymentStatusMessage: String?
     
-    init(identifier: String, success: Bool) {
+    init(identifier: String, paymentSuccessful: Bool, paymentStatusMessage: String?) {
         self.identifier = identifier
-        self.success = success
+        self.paymentSuccessful = paymentSuccessful
+        self.paymentStatusMessage = paymentStatusMessage
     }
 }
 
@@ -30,20 +32,27 @@ extension MWStripePurchaseResult: JSONRepresentable {
 extension MWStripePurchaseResult: ValueProvider {
     
     var content: [AnyHashable: Codable] {
-        return [self.identifier: [CodingKeys.success.stringValue: success]]
+        return [
+            CodingKeys.paymentSuccessful: paymentSuccessful,
+            CodingKeys.paymentStatusMessage: paymentStatusMessage
+        ]
     }
     
     func fetchValue(for path: String) -> Any? {
-        if path == CodingKeys.success.stringValue {
-            return self.success
+        if path == CodingKeys.paymentSuccessful.stringValue {
+            return self.paymentSuccessful
+        } else  if path == CodingKeys.paymentStatusMessage.stringValue {
+            return self.paymentStatusMessage
         } else {
             return nil
         }
     }
     
     func fetchProvider(for path: String) -> ValueProvider? {
-        if path == CodingKeys.success.stringValue {
-            return self.success as? ValueProvider
+        if path == CodingKeys.paymentSuccessful.stringValue {
+            return self.paymentSuccessful as? ValueProvider
+        } else  if path == CodingKeys.paymentStatusMessage.stringValue {
+            return self.paymentStatusMessage as? ValueProvider
         } else {
             return nil
         }

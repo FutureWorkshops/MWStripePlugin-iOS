@@ -163,7 +163,9 @@ public class MWStripeViewController: MWStepViewController {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let response):
-                    let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier, success: response.paymentSuccessful)
+                    let purchaseResult = MWStripePurchaseResult(identifier: self.stripeStep.identifier,
+                                                                paymentSuccessful: response.paymentSuccessful,
+                                                                paymentStatusMessage: response.paymentStatusMessage)
                     self.addStepResult(purchaseResult)
                     self.goForward()
                 case .failure(let error):
