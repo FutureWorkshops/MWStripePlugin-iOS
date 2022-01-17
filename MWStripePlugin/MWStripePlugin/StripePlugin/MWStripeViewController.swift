@@ -22,6 +22,7 @@ struct StripeConfigurationResponse: Decodable {
     let ephemeralKey: String
     let customer: String
     let publishableKey: String
+    let merchantName: String?
 }
 
 struct StripeConfirmationResponse: Decodable {
@@ -132,6 +133,9 @@ public class MWStripeViewController: MWStepViewController {
                     
                     var configuration = PaymentSheet.Configuration()
                     configuration.customer = .init(id: response.customer, ephemeralKeySecret: response.ephemeralKey)
+                    if let merchantName = response.merchantName {
+                        configuration.merchantDisplayName = merchantName
+                    }
                     self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
 
                     self.configureButton(title: L10n.payWithStripe, isEnabled: true)
