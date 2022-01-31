@@ -60,16 +60,12 @@ class MWStripePurchaseCell: UITableViewCell {
         VStack.distribution = .fill
         VStack.axis = .vertical
         VStack.spacing = 4
-        VStack.setContentCompressionResistancePriority(.required, for: .vertical)
-        VStack.setContentHuggingPriority(.defaultLow, for: .horizontal)
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.text = item.text
         titleLabel.font = .preferredFont(forTextStyle: .headline)
-        titleLabel.setContentCompressionResistancePriority(.required, for: .vertical)
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         VStack.addArrangedSubview(titleLabel)
         
         var subtitleLabel: UILabel?
@@ -90,10 +86,6 @@ class MWStripePurchaseCell: UITableViewCell {
         amountLabel.numberOfLines = 1
         amountLabel.text = item.amount
         amountLabel.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
-        amountLabel.sizeToFit()
-        titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        titleLabel.setContentHuggingPriority(.required, for: .horizontal)
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
         amountLabel.textAlignment = .right
         self.stackView.addArrangedSubview(amountLabel)
     }
