@@ -92,8 +92,6 @@ class MWStripePurchaseCell: UITableViewCell {
         amountLabel.font = UIFont.preferredFont(forTextStyle: .title3, weight: .bold)
         amountLabel.sizeToFit()
         titleLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        titleLabel.setContentHuggingPriority(.required, for: .horizontal)
-        titleLabel.setContentHuggingPriority(.defaultLow, for: .vertical)
         amountLabel.textAlignment = .right
         self.stackView.addArrangedSubview(amountLabel)
     }
