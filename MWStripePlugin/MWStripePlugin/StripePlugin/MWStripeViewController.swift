@@ -57,8 +57,8 @@ public class MWStripeViewController: MWStepViewController {
         self.loadItemsToPurchase()
     }
     
-    private func configureButton(title: String, isEnabled: Bool) {
-        self.navigationFooterConfig = NavigationFooterView.Config(primaryButton: ButtonConfig(isEnabled: isEnabled, style: .primary, title: title, action: didTapCheckoutButton),
+    private func configureButton(title: String, isEnabled: Bool, action: @escaping (() -> Void)) {
+        self.navigationFooterConfig = NavigationFooterView.Config(primaryButton: ButtonConfig(isEnabled: isEnabled, style: .primary, title: title, action: action),
                                                                   secondaryButton: nil,
                                                                   hasBlurredBackground: false)
     }
@@ -116,7 +116,7 @@ public class MWStripeViewController: MWStepViewController {
     
     //MARK: Stripe
     private func fetchStripeConfiguration() {
-        self.configureButton(title: L10n.loading, isEnabled: false)
+        self.configureButton(title: L10n.loading, isEnabled: false, action: {})
         guard let url = self.stripeStep.session.resolve(url: stripeStep.paymentIntentURL) else {
             assertionFailure("Failed to resolve the URL")
             return
@@ -143,9 +143,16 @@ public class MWStripeViewController: MWStepViewController {
                     }
                     self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
 
-                    self.configureButton(title: L10n.payWithStripe, isEnabled: true)
+                    self.configureButton(title: L10n.payWithStripe, isEnabled: true, action: self.didTapCheckoutButton)
                 case .failure(let error):
-                    self.show(error)
+                    // A 409 means that the user has already paid: https://futureworkshops.atlassian.net/browse/WELBA-88
+                    if (error as NSError).code == 409 {
+                        self.configureButton(title: L10n.continue, isEnabled: true) {
+                            self.goForward()
+                        }
+                    } else {
+                        self.show(error)
+                    }
                 }
             }
         }
