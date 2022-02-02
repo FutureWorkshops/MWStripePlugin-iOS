@@ -55,15 +55,19 @@ public class MWStripeViewController: MWStepViewController {
         self.view.addPinnedSubview(VStack)
         
         self.loadItemsToPurchase()
-        
-        self.configureButton(title: L10n.loading, isEnabled: false)
-        self.fetchStripeConfiguration()
     }
     
     private func configureButton(title: String, isEnabled: Bool) {
         self.navigationFooterConfig = NavigationFooterView.Config(primaryButton: ButtonConfig(isEnabled: isEnabled, style: .primary, title: title, action: didTapCheckoutButton),
                                                                   secondaryButton: nil,
                                                                   hasBlurredBackground: false)
+    }
+    
+    public override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Fetch every time that the view appears in case that the suer navigates back. If they do,
+        // the server will error out and we'll display a "continue" button if they've already paid.
+        self.fetchStripeConfiguration()
     }
     
     //MARK: Actions
@@ -112,6 +116,7 @@ public class MWStripeViewController: MWStepViewController {
     
     //MARK: Stripe
     private func fetchStripeConfiguration() {
+        self.configureButton(title: L10n.loading, isEnabled: false)
         guard let url = self.stripeStep.session.resolve(url: stripeStep.paymentIntentURL) else {
             assertionFailure("Failed to resolve the URL")
             return
