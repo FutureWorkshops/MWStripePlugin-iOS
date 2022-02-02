@@ -65,7 +65,7 @@ public class MWStripeViewController: MWStepViewController {
     
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // Fetch every time that the view appears in case that the suer navigates back. If they do,
+        // Fetch every time that the view appears in case that the user navigates back. If they do,
         // the server will error out and we'll display a "continue" button if they've already paid.
         self.fetchStripeConfiguration()
     }
