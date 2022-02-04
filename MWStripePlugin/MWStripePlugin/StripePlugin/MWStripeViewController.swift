@@ -146,7 +146,7 @@ public class MWStripeViewController: MWStepViewController {
                     self.configureButton(title: L10n.payWithStripe, isEnabled: true, action: self.didTapCheckoutButton)
                 case .failure(let error):
                     // A 409 means that the user has already paid: https://futureworkshops.atlassian.net/browse/WELBA-88
-                    if (error as NSError).code == 409 {
+                    if (error as? SimpleResponseError)?.errorCode == Optional(409) {
                         self.configureButton(title: L10n.continue, isEnabled: true) {
                             self.goForward()
                         }
