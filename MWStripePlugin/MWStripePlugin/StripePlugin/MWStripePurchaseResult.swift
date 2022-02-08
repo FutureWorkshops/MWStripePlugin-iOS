@@ -30,14 +30,7 @@ extension MWStripePurchaseResult: JSONRepresentable {
 }
 
 extension MWStripePurchaseResult: ValueProvider {
-    
-    var content: [AnyHashable: Codable] {
-        return [
-            CodingKeys.paymentSuccessful: paymentSuccessful,
-            CodingKeys.paymentStatusMessage: paymentStatusMessage
-        ]
-    }
-    
+
     func fetchValue(for path: String) -> Any? {
         if path == CodingKeys.paymentSuccessful.stringValue {
             return self.paymentSuccessful

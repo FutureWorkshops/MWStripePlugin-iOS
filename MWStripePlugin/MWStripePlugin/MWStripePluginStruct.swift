@@ -7,7 +7,7 @@
 
 import MobileWorkflowCore
 
-public struct MWStripePlugin: Plugin {
+public struct MWStripePluginStruct: Plugin {
     public static var allStepsTypes: [StepType] {
         return MWStripeStepType.allCases
     }

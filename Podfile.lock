@@ -1,10 +1,17 @@
 PODS:
-  - MobileWorkflow (0.0.114):
-    - MobileWorkflow/Core (= 0.0.114)
-  - MobileWorkflow/Core (0.0.114)
-  - Stripe (21.4.0):
-    - Stripe/Stripe3DS2 (= 21.4.0)
-  - Stripe/Stripe3DS2 (21.4.0)
+  - MobileWorkflow (2.0.0):
+    - MobileWorkflow/Core (= 2.0.0)
+  - MobileWorkflow/Core (2.0.0)
+  - Stripe (21.11.1):
+    - Stripe/Stripe3DS2 (= 21.11.1)
+    - StripeCore (= 21.11.1)
+    - StripeUICore (= 21.11.1)
+  - Stripe/Stripe3DS2 (21.11.1):
+    - StripeCore (= 21.11.1)
+    - StripeUICore (= 21.11.1)
+  - StripeCore (21.11.1)
+  - StripeUICore (21.11.1):
+    - StripeCore (= 21.11.1)
 
 DEPENDENCIES:
   - MobileWorkflow
@@ -15,11 +22,15 @@ SPEC REPOS:
     - MobileWorkflow
   trunk:
     - Stripe
+    - StripeCore
+    - StripeUICore
 
 SPEC CHECKSUMS:
-  MobileWorkflow: 028becc15581a7e45f1f4b983319dc1ec7e10d87
-  Stripe: 7c594b943abb65cf7bc28e37fd5124e65db3ce9e
+  MobileWorkflow: a4848ca75ddbdb4eb2d4b1bb4e473f637de09feb
+  Stripe: f2bed8369154c35c8ec794704e042e05240d6f21
+  StripeCore: 36571be19dae15e90c8ad47e1af45712aea93f5a
+  StripeUICore: 1b32566d6a69581be786609a032872b0fb5a6823
 
 PODFILE CHECKSUM: 047bbc33b7d5e510cdf222d8f2cb9eae9f11ef9e
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
