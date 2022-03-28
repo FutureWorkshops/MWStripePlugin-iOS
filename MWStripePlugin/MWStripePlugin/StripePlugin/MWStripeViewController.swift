@@ -23,8 +23,12 @@ struct StripeConfigurationResponse: Decodable {
     let customer: String
     let publishableKey: String
     let merchantName: String?
-    let applePayMerchantId: String?
-    let applePayMerchantCountryCode: String?
+    let applePay: StripeApplePayConfiguration?
+}
+
+struct StripeApplePayConfiguration: Decodable {
+    let merchantId: String
+    let merchantCountryCode: String
 }
 
 struct StripeConfirmationResponse: Decodable {
@@ -143,8 +147,8 @@ public class MWStripeViewController: MWStepViewController {
                     if let merchantName = response.merchantName {
                         configuration.merchantDisplayName = merchantName
                     }
-                    if let applePayMerchantId = response.applePayMerchantId, let applePayMerchantCountryCode = response.applePayMerchantCountryCode {
-                        configuration.applePay = .init(merchantId: applePayMerchantId, merchantCountryCode: applePayMerchantCountryCode)
+                    if let applePay = response.applePay {
+                        configuration.applePay = .init(merchantId: applePay.merchantId, merchantCountryCode: applePay.merchantCountryCode)
                     }
                     self.paymentSheet = PaymentSheet(paymentIntentClientSecret: response.paymentIntent, configuration: configuration)
 
