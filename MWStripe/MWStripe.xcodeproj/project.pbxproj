@@ -329,11 +329,17 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-MWStripe-MWStripe/Pods-MWStripe-MWStripe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MobileWorkflowCore/MobileWorkflowCore.framework/MobileWorkflowCore",
+				"${BUILT_PRODUCTS_DIR}/StripeApplePay/StripeApplePay.framework",
+				"${BUILT_PRODUCTS_DIR}/StripeCore/StripeCore.framework",
+				"${BUILT_PRODUCTS_DIR}/StripeUICore/StripeUICore.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/MobileWorkflow/Core/MobileWorkflowCore.framework/MobileWorkflowCore",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StripeApplePay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StripeCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StripeUICore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobileWorkflowCore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
