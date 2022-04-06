@@ -73,12 +73,18 @@ public class MWStripeViewController: MWStepViewController {
         super.viewWillAppear(animated)
         // Fetch every time that the view appears in case that the user navigates back. If they do,
         // the server will error out and we'll display a "continue" button if they've already paid.
-        self.fetchStripeConfiguration()
+        
+        if self.paymentSheet == nil {
+            self.fetchStripeConfiguration()
+        }
     }
     
     //MARK: Actions
     private func didTapCheckoutButton() {
+        self.configureButton(title: L10n.processing, isEnabled: false, action: {})
         paymentSheet?.present(from: self) { paymentResult in
+            self.paymentSheet = nil
+            
             let status: String
             switch paymentResult {
             case .completed:
@@ -163,6 +169,7 @@ public class MWStripeViewController: MWStepViewController {
                         }
                     } else {
                         self.show(error)
+                        self.configureButton(title: L10n.payWithStripe, isEnabled: true, action: {})
                     }
                 }
             }
@@ -171,6 +178,7 @@ public class MWStripeViewController: MWStepViewController {
     
     // Validate against the server what the SDK has returned
     private func validateStripeStatus(status: String) {
+        self.configureButton(title: L10n.validating, isEnabled: false, action: {})
         guard let url = self.stripeStep.session.resolve(url: stripeStep.paymentIntentURL) else {
             assertionFailure("Failed to resolve the URL")
             return
@@ -197,6 +205,7 @@ public class MWStripeViewController: MWStepViewController {
                     self.goForward()
                 case .failure(let error):
                     self.show(error)
+                    self.configureButton(title: L10n.payWithStripe, isEnabled: true, action: {})
                 }
             }
         }
