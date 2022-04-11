@@ -206,8 +206,8 @@ extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(with: item)
         
         if let imageURL = item.imageURL {
-            let cancellable = self.stripeStep.services.imageLoadingService.asyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image in
-                (cell.stackView.arrangedSubviews.first(where: { $0 is UIImageView }) as? UIImageView)?.image = image
+            let cancellable = self.stripeStep.services.imageLoadingService.fromCacheElseAsyncLoad(image: imageURL, session: self.stripeStep.session) { [weak self] image, fromCache in
+                (cell.stackView.arrangedSubviews.first(where: { $0 is UIImageView }) as? UIImageView)?.transition(to: image, animated: !fromCache)
                 cell.setNeedsLayout()
                 self?.ongoingImageLoads.removeValue(forKey: indexPath)
             }
