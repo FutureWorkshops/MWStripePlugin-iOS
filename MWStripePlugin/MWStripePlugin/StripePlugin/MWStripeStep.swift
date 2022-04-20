@@ -33,6 +33,11 @@ public class MWStripeStep: MWStep {
 }
 
 extension MWStripeStep: BuildableStep {
+    
+    public static var mandatoryCodingPaths: [CodingKey] {
+        ["url", "payment_intent_url"]
+    }
+    
     public static func build(stepInfo: StepInfo, services: StepServices) throws -> Step {
         guard let contentURL = stepInfo.data.content["url"] as? String else {
             throw ParseError.invalidStepData(cause: "Missing content URL")
