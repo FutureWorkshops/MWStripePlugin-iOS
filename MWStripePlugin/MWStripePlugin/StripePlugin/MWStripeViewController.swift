@@ -6,7 +6,6 @@
 //
 
 import Stripe
-import Combine
 import Foundation
 import MobileWorkflowCore
 
@@ -34,7 +33,7 @@ public class MWStripeViewController: MWStepViewController {
     
     //MARK: private properties
     private let tableView = UITableView(frame: .zero, style: .insetGrouped)
-    private var ongoingImageLoads: [IndexPath: AnyCancellable] = [:]
+    private var ongoingImageLoads: [IndexPath: Task<(), Never>] = [:]
     
     private var stripeStep: MWStripeStep { self.mwStep as! MWStripeStep }
     private var purchaseableItems: [PurchaseableItem] = [.init(imageURL: nil, text: L10n.loading, detailText: nil, amount: "")]
@@ -206,10 +205,9 @@ extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(with: item)
         
         if let imageURL = item.imageURL {
-            let cancellable = self.stripeStep.services.imageLoadingService.load(image: imageURL, session: self.stripeStep.session) { [weak self] result in
-                (cell.stackView.arrangedSubviews.first(where: { $0 is UIImageView }) as? UIImageView)?.transition(to: result.image, animated: result.wasLoadedRemotely)
-                cell.setNeedsLayout()
-                self?.ongoingImageLoads.removeValue(forKey: indexPath)
+            let cancellable = Task {
+                let result = await self.stripeStep.services.imageLoadingService.load(image: imageURL, session: self.stripeStep.session)
+                self.handle(result: result, cell: cell, indexPath: indexPath)
             }
             self.ongoingImageLoads[indexPath] = cancellable
         }
@@ -222,5 +220,12 @@ extension MWStripeViewController: UITableViewDataSource, UITableViewDelegate {
             imageLoad.cancel()
             self.ongoingImageLoads.removeValue(forKey: indexPath)
         }
+    }
+    
+    @MainActor
+    private func handle(result: ImageLoadingResult, cell: MWStripePurchaseCell, indexPath: IndexPath) {
+        (cell.stackView.arrangedSubviews.first(where: { $0 is UIImageView }) as? UIImageView)?.transition(to: result.image, animated: result.wasLoadedRemotely)
+        cell.setNeedsLayout()
+        self.ongoingImageLoads.removeValue(forKey: indexPath)
     }
 }
