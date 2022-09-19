@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name                  = 'MWStripePlugin'
-    s.version               = '0.1.5'
+    s.version               = '0.2.0'
     s.summary               = 'Stripe plugin for MobileWorkflow on iOS.'
     s.description           = <<-DESC
     Stripe plugin for MobileWorkflow on iOS, containg Stripe related steps:
@@ -12,11 +12,11 @@ Pod::Spec.new do |s|
     s.source                = { :git => 'https://github.com/FutureWorkshops/MWStripePlugin-iOS.git', :tag => "#{s.version}" }
     s.platform              = :ios
     s.swift_version         = '5'
-    s.ios.deployment_target = '13.0'
+    s.ios.deployment_target = '15.0'
 	s.default_subspecs      = 'Core'
 	
     s.subspec 'Core' do |cs|
-        cs.dependency            'MobileWorkflow', '~> 2.0.3'
+        cs.dependency            'MobileWorkflow', '~> 2.1.0'
         cs.dependency            'Stripe'
         cs.source_files          = 'MWStripePlugin/MWStripePlugin/**/*.swift'
         cs.resources             = ['MWStripePlugin/MWStripePlugin/**/*.strings']
